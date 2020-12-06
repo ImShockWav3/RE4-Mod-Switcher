@@ -17,10 +17,9 @@ namespace ModChanger
         string[] GetFiles;
         public string gamePath;
 
-        public Form2(string txt)
+        public Form2()
         {
             InitializeComponent();
-            gamePath = txt;
             radioButton2.Checked = true;
         }
 
@@ -37,7 +36,7 @@ namespace ModChanger
             {
                 string path = folderBrowserDialog1.SelectedPath;
 
-                if (System.IO.Directory.Exists(path + @"\Bin32") || System.IO.Directory.Exists(path + @"\BIO4"))
+                if (Directory.Exists(path + @"\Bin32") || Directory.Exists(path + @"\BIO4"))
                 {
                     textBox1.Text = folderBrowserDialog1.SelectedPath;
                 }

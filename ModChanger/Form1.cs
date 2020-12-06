@@ -270,8 +270,9 @@ namespace ModChanger
 
             else
             {
-                Form2 addNewMod = new Form2(textBox1.Text);
-                addNewMod.ShowDialog(this);
+
+                Form3 manageMods = new Form3();
+                manageMods.ShowDialog();
             }
         }
 
