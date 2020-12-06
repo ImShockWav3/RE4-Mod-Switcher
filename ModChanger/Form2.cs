@@ -92,7 +92,7 @@ namespace ModChanger
 
                 File.AppendAllText(@"settings.cfg", "mod=" + textBox2.Text + "|" + textBox1.Text + "\n");
 
-                MessageBox.Show("The mod has been installed!", "Success", MessageBoxButtons.OK);
+                MessageBox.Show("The mod has been added!", "Success", MessageBoxButtons.OK);
                 Close();
             }
         }

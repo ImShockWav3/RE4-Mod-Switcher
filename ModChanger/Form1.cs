@@ -17,7 +17,6 @@ namespace ModChanger
     {
         string selectedMod;
         string selectedDiff;
-        string[] readSettings = File.ReadAllLines(@"settings.cfg");
         string currentMod;
         bool Switcher = false;
 
@@ -25,12 +24,26 @@ namespace ModChanger
         {
             InitializeComponent();
 
+            if (!File.Exists(@"settings.cfg"))
+            {
+                string[] lines = {
+                    "[SETTINGS]",
+                    "path=",
+                    "currentmod=Original",
+                    "",
+                    "[MODS]"
+                };
+
+                System.IO.File.WriteAllLines(@"settings.cfg", lines);
+            } 
+
             using (var reader = new StreamReader(@"settings.cfg"))
             {
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
                     string[] split = line.Split('|');
+                    string[] readSettings = File.ReadAllLines(@"settings.cfg");
                     currentMod = readSettings[2].Replace("currentmod=", "");
 
                     if (line.StartsWith("path="))
@@ -38,6 +51,7 @@ namespace ModChanger
                         if (line.Length < 6)
                         {
                             textBox1.Text = "Please browse to your game folder.";
+                            button1.Enabled = false;
                             break;
                         }
 
@@ -127,6 +141,7 @@ namespace ModChanger
 
             if (Switcher == true)
             {
+                string[] readSettings = File.ReadAllLines(@"settings.cfg");
                 readSettings[2] = "currentmod=" + selectedMod;
                 File.WriteAllLines(@"settings.cfg", readSettings);
             }
@@ -138,6 +153,7 @@ namespace ModChanger
         {
             selectedMod = Convert.ToString(comboBox1.Text);
             selectedDiff = Convert.ToString(comboBox2.Text);
+            string[] readSettings = File.ReadAllLines(@"settings.cfg");
             currentMod = readSettings[2].Replace("currentmod=", "");
 
             if (selectedMod == "Original" && currentMod == "Original")
@@ -227,11 +243,13 @@ namespace ModChanger
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 string chosenPath = folderBrowserDialog1.SelectedPath;
+                string[] readSettings = File.ReadAllLines(@"settings.cfg");
                 readSettings[1] = "path=" + chosenPath;
 
                 if (File.Exists(chosenPath + @"\Bin32\bio4.exe"))
                 {
                     textBox1.Text = chosenPath;
+                    button1.Enabled = true;
                     File.WriteAllLines(@"settings.cfg", readSettings);
                 }
                 else
@@ -244,8 +262,18 @@ namespace ModChanger
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form2 addNewMod = new Form2(textBox1.Text);
-            addNewMod.ShowDialog(this);
+            string[] readSettings = File.ReadAllLines(@"settings.cfg");
+
+            if (readSettings[1].Length < 6)
+            {
+                MessageBox.Show("Please set your game path before adding mods.");
+            }
+
+            else
+            {
+                Form2 addNewMod = new Form2(textBox1.Text);
+                addNewMod.ShowDialog(this);
+            }
         }
 
         private void button_refreshModList_Click(object sender, EventArgs e)
