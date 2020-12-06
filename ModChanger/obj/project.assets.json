@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\João\\Documentos\\Projetos\\ModChanger\\ModChanger\\ModChanger.csproj",
+      "projectUniqueName": "C:\\Users\\nices\\Documents\\Projetos\\ModChanger\\ModChanger\\ModChanger.csproj",
       "projectName": "ModChanger",
-      "projectPath": "D:\\João\\Documentos\\Projetos\\ModChanger\\ModChanger\\ModChanger.csproj",
+      "projectPath": "C:\\Users\\nices\\Documents\\Projetos\\ModChanger\\ModChanger\\ModChanger.csproj",
       "packagesPath": "C:\\Users\\nices\\.nuget\\packages\\",
-      "outputPath": "D:\\João\\Documentos\\Projetos\\ModChanger\\ModChanger\\obj\\",
+      "outputPath": "C:\\Users\\nices\\Documents\\Projetos\\ModChanger\\ModChanger\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nices\\AppData\\Roaming\\NuGet\\NuGet.Config",

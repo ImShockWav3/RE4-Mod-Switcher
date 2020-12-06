@@ -32,7 +32,6 @@ namespace ModChanger
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button_browseFiles = new System.Windows.Forms.Button();
@@ -83,13 +82,6 @@ namespace ModChanger
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(151, 23);
             this.comboBox2.TabIndex = 2;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 199);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(442, 23);
-            this.progressBar1.TabIndex = 3;
             // 
             // label1
             // 
@@ -168,7 +160,7 @@ namespace ModChanger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 234);
+            this.ClientSize = new System.Drawing.Size(466, 208);
             this.Controls.Add(this.button_refreshModList);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
@@ -177,7 +169,6 @@ namespace ModChanger
             this.Controls.Add(this.button_browseFiles);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
@@ -196,7 +187,6 @@ namespace ModChanger
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button_browseFiles;

@@ -13,30 +13,38 @@ using System.IO;
 namespace ModChanger
 {
 
-
     public partial class Form1 : Form
     {
-
         string selectedMod;
         string selectedDiff;
-        string chosenPath;
+        string[] readSettings = File.ReadAllLines(@"settings.cfg");
         string currentMod;
-        string bio4;
+        bool Switcher = false;
 
         public Form1()
         {
             InitializeComponent();
-            string line = File.ReadLines(@"settings.cfg").Skip(1).Take(1).First();
-            textBox1.Text = line.Replace("path=","");
 
-            using (var reader = new System.IO.StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(@"settings.cfg"))
             {
                 while (!reader.EndOfStream)
                 {
-                    string newMod = reader.ReadLine();
-                    string[] split = newMod.Split('|');
+                    string line = reader.ReadLine();
+                    string[] split = line.Split('|');
+                    currentMod = readSettings[2].Replace("currentmod=", "");
 
-                    if (newMod.StartsWith("mod="))
+                    if (line.StartsWith("path="))
+                    {
+                        if (line.Length < 6)
+                        {
+                            textBox1.Text = "Please browse to your game folder.";
+                            break;
+                        }
+
+                        textBox1.Text = line.Replace("path=", "");
+                    }
+
+                    if (line.StartsWith("mod="))
                     {
                         comboBox1.Items.Add(split[0].Replace("mod=", ""));
                     }
@@ -45,16 +53,15 @@ namespace ModChanger
                 reader.Close();
             }
 
-            string currMod = File.ReadAllText(@"currentmod.ini");
-
-            if (currMod.Length == 0 || (currMod.Contains("Original")))
+            if (currentMod.Length == 0 || currentMod.Contains("Original"))
             {
                 comboBox1.SelectedItem = "Original";
             }
             else
             {
-                comboBox1.SelectedItem = currMod;
+                comboBox1.SelectedItem = currentMod;
             }
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,13 +69,89 @@ namespace ModChanger
 
         }
 
+        private void Restore()
+        {
+            selectedMod = Convert.ToString(comboBox1.Text);
+            selectedDiff = Convert.ToString(comboBox2.Text);
+
+            using (var reader = new StreamReader(@"settings.cfg"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string changeMod = reader.ReadLine();
+                    string[] split = changeMod.Split('|');
+
+                    if (changeMod.StartsWith("mod="))
+                    {
+                        using (var reader2 = new StreamReader(split[1] + @"\config.cfg"))
+                        {
+                            while (!reader2.EndOfStream)
+                            {
+                                string readFiles = reader2.ReadLine();
+                                string File = readFiles.Replace("file=", "\\");
+                                string[] folder = readFiles.Split('\\');
+                                string gamePath = textBox1.Text;
+                                bool checkModFile = System.IO.File.Exists(split[1] + File);
+                                bool checkFile = System.IO.File.Exists(gamePath + File + ".bak");
+                                bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs.bak");
+
+                                if (readFiles.StartsWith("file="))
+                                {
+
+                                    if (!System.IO.File.Exists(split[1] + File))
+                                    {
+                                        System.IO.File.Move(gamePath + File, split[1] + File);
+                                    }
+
+                                    if (checkFile)
+                                    {
+                                        System.IO.File.Move(gamePath + File + ".bak", gamePath + File);
+                                    }
+
+                                    else if (checkLfsFile)
+                                    {
+                                        System.IO.File.Move(gamePath + File + ".lfs.bak", gamePath + File + ".lfs");
+                                    }
+
+                                    Switcher = true;
+                                }
+                            }
+
+                            reader2.Close();
+                        }
+                    }
+                }
+
+                reader.Close();
+            }
+
+            if (Switcher == true)
+            {
+                readSettings[2] = "currentmod=" + selectedMod;
+                File.WriteAllLines(@"settings.cfg", readSettings);
+            }
+
+            Switcher = false;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             selectedMod = Convert.ToString(comboBox1.Text);
             selectedDiff = Convert.ToString(comboBox2.Text);
-            currentMod = System.IO.File.ReadAllText(@"currentmod.ini");
+            currentMod = readSettings[2].Replace("currentmod=", "");
 
-            using (var reader = new System.IO.StreamReader(@"settings.cfg"))
+            if (selectedMod == "Original" && currentMod == "Original")
+            {
+                MessageBox.Show("The game has no mods installed.");
+            }
+
+            else if (selectedMod == "Original" && currentMod != "Original")
+            {
+                MessageBox.Show("Restoring...");
+                Restore();
+            }
+
+            using (var reader = new StreamReader(@"settings.cfg"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -79,78 +162,63 @@ namespace ModChanger
                     {
                         if (selectedMod != currentMod)
                         {
+                            if (currentMod != "Original")
+                            {
+                                Restore();
+                            }
+
                             MessageBox.Show("Installing " + selectedMod + ". Directory is: " + split[1]);
 
-
-                            using (var reader2 = new System.IO.StreamReader(split[1] + @"\config.cfg"))
+                            using (var reader2 = new StreamReader(split[1] + @"\config.cfg"))
                             {
                                 while (!reader2.EndOfStream)
                                 {
                                     string readFiles = reader2.ReadLine();
-                                    string File = readFiles.Replace("file=","\\");
+                                    string File = readFiles.Replace("file=", "\\");
                                     string[] folder = readFiles.Split('\\');
                                     string gamePath = textBox1.Text;
-
                                     bool checkModFile = System.IO.File.Exists(split[1] + File);
-                                    bool checkGameFile = System.IO.File.Exists(gamePath + File);
+                                    bool checkFile = System.IO.File.Exists(gamePath + File);
+                                    bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs");
 
                                     if (readFiles.StartsWith("file="))
                                     {
-                                        if (checkModFile && checkGameFile)
+                                        if (checkFile)
                                         {
-                                            System.IO.File.Move(gamePath+File, gamePath+File+".bak");
-                                            // new System.IO.FileInfo(gamePath + File.Replace(folder.Last(), ""));
-                                            // System.IO.Directory.CreateDirectory(gamePath + @"\Original" + File.Replace(folder.Last(), ""));
-                                            // System.IO.File.Move(gamePath + File, gamePath + @"\Original" + File.Replace(folder.Last(), ""));
-                                            // System.IO.File.Move(split[1] + File, gamePath);
+                                            System.IO.File.Move(gamePath + File, gamePath + File + ".bak");
                                         }
-                                        else if ((checkModFile) || (!checkGameFile))
+
+                                        else if (checkLfsFile)
                                         {
-                                            // System.IO.File.Move("","");
+                                            System.IO.File.Move(gamePath + File + ".lfs", gamePath + File + ".lfs.bak");
                                         }
-                                        else
-                                        {
-                                            MessageBox.Show("Not found.");
-                                        }
+
+                                        System.IO.File.Move(split[1] + File, gamePath + File);
+                                        Switcher = true;
                                     }
                                 }
 
                                 reader2.Close();
                             }
+                        }   
 
-                            System.IO.File.WriteAllText(@"currentmod.ini", selectedMod);
-                        }
                         else
                         {
                             MessageBox.Show(selectedMod + " is already installed.");
                         }
-                        
                     }
                 }
 
                 reader.Close();
             }
 
-            if (selectedMod == "Original" && currentMod != "Original")
+            if (Switcher == true)
             {
-                Restore();
-                System.IO.File.WriteAllText(@"currentmod.ini", "Original");
+                readSettings[2] = "currentmod=" + selectedMod;
+                File.WriteAllLines(@"settings.cfg", readSettings);
             }
-            else if (selectedMod == "Original" && currentMod == "Original")
-            {
-                MessageBox.Show("The game has no mods installed already.");
-            }
-        }
 
-        private void Restore()
-        {
-            MessageBox.Show("Restoring");
-
-        }
-
-        private void InstallMod()
-        {
-            // string check = System.IO.File.Exists();
+            Switcher = false;
         }
 
 
@@ -158,26 +226,18 @@ namespace ModChanger
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                
-                chosenPath = folderBrowserDialog1.SelectedPath;
-                bio4 = (chosenPath + @"\Bin32\bio4.exe");      
+                string chosenPath = folderBrowserDialog1.SelectedPath;
+                readSettings[1] = "path=" + chosenPath;
 
-                if (System.IO.File.Exists(bio4))
+                if (File.Exists(chosenPath + @"\Bin32\bio4.exe"))
                 {
-                    string[] lines = {
-                    "[SETTINGS]",
-                    "path="+chosenPath,
-                    "",
-                    "[MODS]",
-                };
-                    textBox1.Text = folderBrowserDialog1.SelectedPath;
-                    System.IO.File.WriteAllLines(@"settings.cfg", lines);
+                    textBox1.Text = chosenPath;
+                    File.WriteAllLines(@"settings.cfg", readSettings);
                 }
                 else
                 {
                     MessageBox.Show("bio4.exe was not found. Please try again!", "Error", MessageBoxButtons.OK);
                 }
-                
             }
         }
 
@@ -190,7 +250,7 @@ namespace ModChanger
 
         private void button_refreshModList_Click(object sender, EventArgs e)
         {
-            using (var reader = new System.IO.StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(@"settings.cfg"))
             {
                 while (!reader.EndOfStream)
                 {
