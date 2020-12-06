@@ -109,9 +109,8 @@ namespace ModChanger
                                 bool checkFile = System.IO.File.Exists(gamePath + File + ".bak");
                                 bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs.bak");
 
-                                if (readFiles.StartsWith("file="))
+                                if (readFiles.StartsWith("file=") && !readFiles.Contains("config.cfg"))
                                 {
-
                                     if (!System.IO.File.Exists(split[1] + File))
                                     {
                                         System.IO.File.Move(gamePath + File, split[1] + File);
@@ -197,7 +196,7 @@ namespace ModChanger
                                     bool checkFile = System.IO.File.Exists(gamePath + File);
                                     bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs");
 
-                                    if (readFiles.StartsWith("file="))
+                                    if (readFiles.StartsWith("file=") && !readFiles.Contains("config.cfg"))
                                     {
                                         if (checkFile)
                                         {
