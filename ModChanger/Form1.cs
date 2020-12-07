@@ -188,6 +188,7 @@ namespace ModChanger
                             {
                                 while (!reader2.EndOfStream)
                                 {
+                                    
                                     string readFiles = reader2.ReadLine();
                                     string File = readFiles.Replace("file=", "\\");
                                     string[] folder = readFiles.Split('\\');
@@ -196,8 +197,10 @@ namespace ModChanger
                                     bool checkFile = System.IO.File.Exists(gamePath + File);
                                     bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs");
 
+                                    
                                     if (readFiles.StartsWith("file=") && !readFiles.Contains("config.cfg"))
                                     {
+
                                         if (checkFile)
                                         {
                                             System.IO.File.Move(gamePath + File, gamePath + File + ".bak");
@@ -208,8 +211,13 @@ namespace ModChanger
                                             System.IO.File.Move(gamePath + File + ".lfs", gamePath + File + ".lfs.bak");
                                         }
 
-                                        System.IO.File.Move(split[1] + File, gamePath + File);
+                                        if (!System.IO.File.Exists(gamePath + File))
+                                        {
+                                            System.IO.File.Move(split[1] + File, gamePath + File);
+                                        }
+
                                         Switcher = true;
+                                        
                                     }
                                 }
 
@@ -270,7 +278,6 @@ namespace ModChanger
 
             else
             {
-
                 Form3 manageMods = new Form3();
                 manageMods.ShowDialog();
             }

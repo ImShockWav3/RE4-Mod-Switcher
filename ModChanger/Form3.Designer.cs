@@ -37,36 +37,40 @@ namespace ModChanger
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btn_Save = new System.Windows.Forms.Button();
+            this.btn_Refresh = new System.Windows.Forms.Button();
+            this.btn_Browse = new System.Windows.Forms.Button();
+            this.btn_Delete = new System.Windows.Forms.Button();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // modList
             // 
             this.modList.FormattingEnabled = true;
-            this.modList.ItemHeight = 20;
-            this.modList.Location = new System.Drawing.Point(12, 45);
+            this.modList.ItemHeight = 15;
+            this.modList.Location = new System.Drawing.Point(10, 34);
+            this.modList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.modList.Name = "modList";
-            this.modList.Size = new System.Drawing.Size(181, 284);
+            this.modList.Size = new System.Drawing.Size(159, 199);
             this.modList.TabIndex = 0;
             this.modList.SelectedIndexChanged += new System.EventHandler(this.modList_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 22);
+            this.label1.Location = new System.Drawing.Point(10, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 20);
+            this.label1.Size = new System.Drawing.Size(89, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Mods available:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(398, 323);
+            this.button1.Location = new System.Drawing.Point(347, 243);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 41);
+            this.button1.Size = new System.Drawing.Size(138, 31);
             this.button1.TabIndex = 2;
             this.button1.Text = "Add a new mod";
             this.button1.UseVisualStyleBackColor = true;
@@ -74,82 +78,96 @@ namespace ModChanger
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(199, 72);
+            this.txtName.Location = new System.Drawing.Point(175, 54);
+            this.txtName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(217, 27);
+            this.txtName.Size = new System.Drawing.Size(189, 23);
             this.txtName.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(199, 49);
+            this.label2.Location = new System.Drawing.Point(174, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 20);
+            this.label2.Size = new System.Drawing.Size(42, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "Name:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(199, 118);
+            this.label3.Location = new System.Drawing.Point(174, 88);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 20);
+            this.label3.Size = new System.Drawing.Size(34, 15);
             this.label3.TabIndex = 5;
             this.label3.Text = "Path:";
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(199, 141);
+            this.txtPath.Location = new System.Drawing.Point(175, 106);
+            this.txtPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(327, 27);
+            this.txtPath.Size = new System.Drawing.Size(286, 23);
             this.txtPath.TabIndex = 6;
             // 
-            // button2
+            // btn_Save
             // 
-            this.button2.Location = new System.Drawing.Point(430, 71);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 29);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Save changes";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_Save.Enabled = false;
+            this.btn_Save.Location = new System.Drawing.Point(380, 53);
+            this.btn_Save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(110, 24);
+            this.btn_Save.TabIndex = 7;
+            this.btn_Save.Text = "Save changes";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
-            // button3
+            // btn_Refresh
             // 
-            this.button3.Location = new System.Drawing.Point(12, 335);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(104, 29);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Refresh list";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_Refresh.Location = new System.Drawing.Point(10, 243);
+            this.btn_Refresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Refresh.Name = "btn_Refresh";
+            this.btn_Refresh.Size = new System.Drawing.Size(91, 31);
+            this.btn_Refresh.TabIndex = 8;
+            this.btn_Refresh.Text = "Refresh list";
+            this.btn_Refresh.UseVisualStyleBackColor = true;
+            this.btn_Refresh.Click += new System.EventHandler(this.btn_Refresh_Click);
             // 
-            // button5
+            // btn_Browse
             // 
-            this.button5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button5.BackgroundImage")));
-            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button5.Location = new System.Drawing.Point(532, 141);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(27, 27);
-            this.button5.TabIndex = 10;
-            this.button5.UseVisualStyleBackColor = true;
+            this.btn_Browse.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_Browse.BackgroundImage")));
+            this.btn_Browse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btn_Browse.Location = new System.Drawing.Point(466, 106);
+            this.btn_Browse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Browse.Name = "btn_Browse";
+            this.btn_Browse.Size = new System.Drawing.Size(24, 23);
+            this.btn_Browse.TabIndex = 10;
+            this.btn_Browse.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btn_Delete
             // 
-            this.button4.Location = new System.Drawing.Point(122, 335);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(71, 29);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "Delete";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btn_Delete.Location = new System.Drawing.Point(107, 243);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Delete.Name = "btn_Delete";
+            this.btn_Delete.Size = new System.Drawing.Size(62, 31);
+            this.btn_Delete.TabIndex = 11;
+            this.btn_Delete.Text = "Delete";
+            this.btn_Delete.UseVisualStyleBackColor = true;
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
             // 
             // Form3
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 389);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(497, 292);
+            this.Controls.Add(this.btn_Delete);
+            this.Controls.Add(this.btn_Browse);
+            this.Controls.Add(this.btn_Refresh);
+            this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -158,10 +176,12 @@ namespace ModChanger
             this.Controls.Add(this.label1);
             this.Controls.Add(this.modList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Form3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage mods";
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,9 +196,10 @@ namespace ModChanger
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPath;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btn_Save;
+        private System.Windows.Forms.Button btn_Refresh;
+        private System.Windows.Forms.Button btn_Browse;
+        private System.Windows.Forms.Button btn_Delete;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
