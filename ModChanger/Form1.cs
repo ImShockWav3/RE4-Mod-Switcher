@@ -23,6 +23,8 @@ namespace ModChanger
         public Form1()
         {
             InitializeComponent();
+            btn_Settings.MouseEnter += new EventHandler(btn_Settings_MouseEnter);
+            btn_Settings.MouseLeave += new EventHandler(btn_Settings_MouseLeave);
 
             if (!File.Exists(@"settings.cfg"))
             {
@@ -303,6 +305,23 @@ namespace ModChanger
 
                 reader.Close();
             }
+        }
+
+        void btn_Settings_MouseLeave(object sender, EventArgs e)
+        {
+            btn_Settings.BackgroundImage = (Image)(Properties.Resources.settings);
+        }
+
+
+        void btn_Settings_MouseEnter(object sender, EventArgs e)
+        {
+            btn_Settings.BackgroundImage = (Image)(Properties.Resources.settings2);
+        }
+
+        private void btn_Settings_Click(object sender, EventArgs e)
+        {
+            Form4 f4 = new Form4();
+            f4.ShowDialog();
         }
     }
 }

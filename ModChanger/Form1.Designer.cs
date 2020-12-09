@@ -29,6 +29,8 @@ namespace ModChanger
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -41,6 +43,8 @@ namespace ModChanger
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
             this.button_refreshModList = new System.Windows.Forms.Button();
+            this.btn_Settings = new System.Windows.Forms.Button();
+            this.Tip_Settings = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // button1
@@ -98,7 +102,7 @@ namespace ModChanger
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 23);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Add a new mod";
+            this.button2.Text = "Manage mods";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -116,18 +120,18 @@ namespace ModChanger
             // 
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.Size = new System.Drawing.Size(187, 23);
             this.label2.TabIndex = 7;
-            this.label2.Text = "RE4 Mod Changer v0.1";
+            this.label2.Text = "RE4 Mod Changer by ShockWav3";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(370, 9);
+            this.label3.Location = new System.Drawing.Point(194, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 15);
+            this.label3.Size = new System.Drawing.Size(45, 15);
             this.label3.TabIndex = 8;
-            this.label3.Text = "by ShockWav3";
+            this.label3.Text = "(v1.0.0)";
             // 
             // textBox1
             // 
@@ -156,11 +160,31 @@ namespace ModChanger
             this.button_refreshModList.UseVisualStyleBackColor = true;
             this.button_refreshModList.Click += new System.EventHandler(this.button_refreshModList_Click);
             // 
+            // btn_Settings
+            // 
+            this.btn_Settings.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_Settings.BackgroundImage")));
+            this.btn_Settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_Settings.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btn_Settings.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.btn_Settings.FlatAppearance.BorderSize = 0;
+            this.btn_Settings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btn_Settings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btn_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Settings.ForeColor = System.Drawing.Color.Transparent;
+            this.btn_Settings.Location = new System.Drawing.Point(431, 6);
+            this.btn_Settings.Name = "btn_Settings";
+            this.btn_Settings.Size = new System.Drawing.Size(28, 26);
+            this.btn_Settings.TabIndex = 12;
+            this.Tip_Settings.SetToolTip(this.btn_Settings, "Settings");
+            this.btn_Settings.UseVisualStyleBackColor = true;
+            this.btn_Settings.Click += new System.EventHandler(this.btn_Settings_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 204);
+            this.Controls.Add(this.btn_Settings);
             this.Controls.Add(this.button_refreshModList);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
@@ -196,6 +220,8 @@ namespace ModChanger
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button_refreshModList;
+        private System.Windows.Forms.Button btn_Settings;
+        private System.Windows.Forms.ToolTip Tip_Settings;
     }
 }
 

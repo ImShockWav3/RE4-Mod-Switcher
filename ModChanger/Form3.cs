@@ -108,5 +108,30 @@ namespace ModChanger
             }
         }
 
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            if (modList.SelectedItem != null)
+            {
+                string[] lines = File.ReadAllLines(@"settings.cfg");
+                int lineNumber = GetLineNumber(@"settings.cfg", $"mod={modList.SelectedItem}");
+
+                lines[lineNumber] = "";
+                File.WriteAllLines(@"settings.cfg", lines);
+
+                txtName.Text = "";
+                txtPath.Text = "";
+                modList.Items.Clear();
+                RefreshList();
+            }
+            else
+            {
+                MessageBox.Show("Please select a mod to be deleted.");
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            RefreshList();
+        }
     }
 }

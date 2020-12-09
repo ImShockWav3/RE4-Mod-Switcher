@@ -29,6 +29,7 @@ namespace ModChanger
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
             this.modList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,6 +43,8 @@ namespace ModChanger
             this.btn_Browse = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,17 +156,32 @@ namespace ModChanger
             this.btn_Delete.TabIndex = 11;
             this.btn_Delete.Text = "Delete";
             this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Location = new System.Drawing.Point(175, 131);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(286, 19);
+            this.hScrollBar1.TabIndex = 12;
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 292);
+            this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.btn_Browse);
             this.Controls.Add(this.btn_Refresh);
@@ -201,5 +219,7 @@ namespace ModChanger
         private System.Windows.Forms.Button btn_Browse;
         private System.Windows.Forms.Button btn_Delete;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
     }
 }
