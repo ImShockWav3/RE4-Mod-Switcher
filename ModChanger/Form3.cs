@@ -12,6 +12,7 @@ namespace ModChanger
 {
     public partial class Form3 : Form
     {
+        string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
 
         public Form3()
         {
@@ -21,9 +22,7 @@ namespace ModChanger
 
         private void modList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (modList.SelectedItem != null) { btn_Save.Enabled = true; }
-
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
@@ -47,8 +46,6 @@ namespace ModChanger
             addNewMod.ShowDialog();
         }
 
-        private void btn_Refresh_Click(object sender, EventArgs e) => RefreshList();
-
         private void btn_Save_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to overwrite the current settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -56,13 +53,12 @@ namespace ModChanger
             if (result == DialogResult.Yes)
             {
                 string indexedMod = Convert.ToString(modList.SelectedItem);
-                int line = GetLineNumber(@"settings.cfg", $"mod={indexedMod}");
+                int line = GetLineNumber(settings, $"mod={indexedMod}");
 
-                string[] readSettings = File.ReadAllLines(@"settings.cfg");
+                string[] readSettings = File.ReadAllLines(settings);
                 readSettings[line] = $"mod={txtName.Text}|{txtPath.Text}";
-                File.WriteAllLines(@"settings.cfg", readSettings);
+                File.WriteAllLines(settings, readSettings);
 
-                btn_Save.Enabled = false;
                 txtName.Text = "";
                 txtPath.Text = "";
 
@@ -91,7 +87,7 @@ namespace ModChanger
 
         private void RefreshList()
         {
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
@@ -110,27 +106,58 @@ namespace ModChanger
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+
             if (modList.SelectedItem != null)
             {
-                string[] lines = File.ReadAllLines(@"settings.cfg");
-                int lineNumber = GetLineNumber(@"settings.cfg", $"mod={modList.SelectedItem}");
+                var result = MessageBox.Show(
+                    $"Are you sure you want to delete \"{modList.SelectedItem}\"?", "Are you sure?",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                    );
 
-                lines[lineNumber] = "";
-                File.WriteAllLines(@"settings.cfg", lines);
+                if (result == DialogResult.Yes)
+                {
+                    using (var writer = new StreamWriter(settings + ".temp.txt"))
+                    using (var reader = new StreamReader(settings))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string line = reader.ReadLine();
 
-                txtName.Text = "";
-                txtPath.Text = "";
-                modList.Items.Clear();
-                RefreshList();
+                            if (!line.StartsWith($"mod={modList.SelectedItem}"))
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                    }
+
+                    File.Delete(settings);
+                    File.Move(settings + ".temp.txt", settings);
+                    txtName.Text = "";
+                    txtPath.Text = "";
+                    modList.Items.Clear();
+                    RefreshList();
+                }
             }
             else
             {
                 MessageBox.Show("Please select a mod to be deleted.");
             }
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (modList.SelectedItem == null)
+            {
+                btn_Delete.Enabled = false;
+                btn_Save.Enabled = false;
+            }
+            else
+            {
+                btn_Delete.Enabled = true;
+                btn_Save.Enabled = true;
+            }
+
             RefreshList();
         }
     }

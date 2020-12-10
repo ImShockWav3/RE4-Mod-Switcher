@@ -13,6 +13,7 @@ namespace ModChanger
     
     public partial class Form2 : Form
     {
+        string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
         string modPath;
         string[] GetFiles;
         public string gamePath;
@@ -55,41 +56,28 @@ namespace ModChanger
             {
                 MessageBox.Show("Please, choose the mod directory.", "Error", MessageBoxButtons.OK);
             }
-            else if (textBox2.TextLength == 0)
+            else if (textBox2.TextLength <= 5)
             {
-                MessageBox.Show("Please, give the mod a name.", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("The mod name needs to be at least 5 characters long.", "Error", MessageBoxButtons.OK);
             }
             else
             {
                 modPath = textBox1.Text;
+                
+                int modLength = textBox1.Text.Length + 1;
 
                 GetFiles = Directory.GetFiles(modPath, "*.*", SearchOption.AllDirectories);
 
+                var writer = new StreamWriter(modPath + @"\files.txt", true);
 
-                string[] lines = {
-                    "[SETTINGS]",
-                    "path="+textBox1.Text,
-                    "name="+textBox2.Text,
-                    "diff="+comboBox1.SelectedItem,
-                    ""
-                };
-
-
-                int modLength = textBox1.Text.Length + 1;
-
-                System.IO.File.WriteAllLines(modPath + @"\config.cfg", lines);
-
-                TextWriter tw1 = new StreamWriter(modPath + @"\config.cfg", true);
-                List<string> filenames = new List<string>();
-                tw1.WriteLine("[FILES]");
                 foreach (string filename in GetFiles)
                 {
-                    tw1.WriteLine("file=" + filename.Remove(0,modLength));
+                    writer.WriteLine("file=" + filename.Remove(0,modLength));
                 }
-                tw1.Close();
 
+                writer.Close();
 
-                File.AppendAllText(@"settings.cfg", "mod=" + textBox2.Text + "|" + textBox1.Text + "\n");
+                File.AppendAllText(settings, $"mod={textBox2.Text}|{textBox1.Text}\n");
 
                 MessageBox.Show("The mod has been added!", "Success", MessageBoxButtons.OK);
                 Close();

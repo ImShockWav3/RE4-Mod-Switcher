@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
+      "projectUniqueName": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
       "projectName": "ModChanger",
-      "projectPath": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
+      "projectPath": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
       "packagesPath": "C:\\Users\\nices\\.nuget\\packages\\",
-      "outputPath": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\obj\\",
+      "outputPath": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nices\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -63,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

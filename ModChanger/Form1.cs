@@ -15,6 +15,7 @@ namespace ModChanger
 
     public partial class Form1 : Form
     {
+        string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
         string selectedMod;
         string selectedDiff;
         string currentMod;
@@ -26,7 +27,7 @@ namespace ModChanger
             btn_Settings.MouseEnter += new EventHandler(btn_Settings_MouseEnter);
             btn_Settings.MouseLeave += new EventHandler(btn_Settings_MouseLeave);
 
-            if (!File.Exists(@"settings.cfg"))
+            if (!File.Exists(settings))
             {
                 string[] lines = {
                     "[SETTINGS]",
@@ -36,16 +37,16 @@ namespace ModChanger
                     "[MODS]"
                 };
 
-                System.IO.File.WriteAllLines(@"settings.cfg", lines);
+                File.WriteAllLines(settings, lines);
             } 
 
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
                     string[] split = line.Split('|');
-                    string[] readSettings = File.ReadAllLines(@"settings.cfg");
+                    string[] readSettings = File.ReadAllLines(settings);
                     currentMod = readSettings[2].Replace("currentmod=", "");
 
                     if (line.StartsWith("path="))
@@ -90,7 +91,7 @@ namespace ModChanger
             selectedMod = Convert.ToString(comboBox1.Text);
             selectedDiff = Convert.ToString(comboBox2.Text);
 
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
@@ -99,7 +100,7 @@ namespace ModChanger
 
                     if (changeMod.StartsWith("mod="))
                     {
-                        using (var reader2 = new StreamReader(split[1] + @"\config.cfg"))
+                        using (var reader2 = new StreamReader(split[1] + @"\files.txt"))
                         {
                             while (!reader2.EndOfStream)
                             {
@@ -111,7 +112,7 @@ namespace ModChanger
                                 bool checkFile = System.IO.File.Exists(gamePath + File + ".bak");
                                 bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs.bak");
 
-                                if (readFiles.StartsWith("file=") && !readFiles.Contains("config.cfg"))
+                                if (readFiles.StartsWith("file=") && !readFiles.Contains("files.txt"))
                                 {
                                     if (!System.IO.File.Exists(split[1] + File))
                                     {
@@ -142,9 +143,9 @@ namespace ModChanger
 
             if (Switcher == true)
             {
-                string[] readSettings = File.ReadAllLines(@"settings.cfg");
+                string[] readSettings = File.ReadAllLines(settings);
                 readSettings[2] = "currentmod=" + selectedMod;
-                File.WriteAllLines(@"settings.cfg", readSettings);
+                File.WriteAllLines(settings, readSettings);
             }
 
             Switcher = false;
@@ -154,7 +155,7 @@ namespace ModChanger
         {
             selectedMod = Convert.ToString(comboBox1.Text);
             selectedDiff = Convert.ToString(comboBox2.Text);
-            string[] readSettings = File.ReadAllLines(@"settings.cfg");
+            string[] readSettings = File.ReadAllLines(settings);
             currentMod = readSettings[2].Replace("currentmod=", "");
 
             if (selectedMod == "Original" && currentMod == "Original")
@@ -168,7 +169,7 @@ namespace ModChanger
                 Restore();
             }
 
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
@@ -186,7 +187,7 @@ namespace ModChanger
 
                             MessageBox.Show("Installing " + selectedMod + ". Directory is: " + split[1]);
 
-                            using (var reader2 = new StreamReader(split[1] + @"\config.cfg"))
+                            using (var reader2 = new StreamReader(split[1] + @"\files.txt"))
                             {
                                 while (!reader2.EndOfStream)
                                 {
@@ -200,7 +201,7 @@ namespace ModChanger
                                     bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs");
 
                                     
-                                    if (readFiles.StartsWith("file=") && !readFiles.Contains("config.cfg"))
+                                    if (readFiles.StartsWith("file=") && !readFiles.Contains("files.txt"))
                                     {
 
                                         if (checkFile)
@@ -240,7 +241,7 @@ namespace ModChanger
             if (Switcher == true)
             {
                 readSettings[2] = "currentmod=" + selectedMod;
-                File.WriteAllLines(@"settings.cfg", readSettings);
+                File.WriteAllLines(settings, readSettings);
             }
 
             Switcher = false;
@@ -252,14 +253,14 @@ namespace ModChanger
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 string chosenPath = folderBrowserDialog1.SelectedPath;
-                string[] readSettings = File.ReadAllLines(@"settings.cfg");
+                string[] readSettings = File.ReadAllLines(settings);
                 readSettings[1] = "path=" + chosenPath;
 
                 if (File.Exists(chosenPath + @"\Bin32\bio4.exe"))
                 {
                     textBox1.Text = chosenPath;
                     button1.Enabled = true;
-                    File.WriteAllLines(@"settings.cfg", readSettings);
+                    File.WriteAllLines(settings, readSettings);
                 }
                 else
                 {
@@ -271,7 +272,7 @@ namespace ModChanger
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string[] readSettings = File.ReadAllLines(@"settings.cfg");
+            string[] readSettings = File.ReadAllLines(settings);
 
             if (readSettings[1].Length < 6)
             {
@@ -287,7 +288,7 @@ namespace ModChanger
 
         private void button_refreshModList_Click(object sender, EventArgs e)
         {
-            using (var reader = new StreamReader(@"settings.cfg"))
+            using (var reader = new StreamReader(settings))
             {
                 while (!reader.EndOfStream)
                 {
@@ -309,13 +310,13 @@ namespace ModChanger
 
         void btn_Settings_MouseLeave(object sender, EventArgs e)
         {
-            btn_Settings.BackgroundImage = (Image)(Properties.Resources.settings);
+            btn_Settings.BackgroundImage = Properties.Resources.settings;
         }
 
 
         void btn_Settings_MouseEnter(object sender, EventArgs e)
         {
-            btn_Settings.BackgroundImage = (Image)(Properties.Resources.settings2);
+            btn_Settings.BackgroundImage = Properties.Resources.settings2;
         }
 
         private void btn_Settings_Click(object sender, EventArgs e)

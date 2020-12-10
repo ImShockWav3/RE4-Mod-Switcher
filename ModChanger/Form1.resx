@@ -57,11 +57,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
   <data name="btn_Settings.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAppJREFUSEutVctqU1EUjfQjBAsOBUFwkNco7wzjwASSgQhJBgl5mZjHTcxD8AdC
+        wQAADsEBuJFr7QAAAppJREFUSEutVctqU1EUjfQjBAsOBUFwkNco7wzjwASSgQhJBgl5mZjHTcxD8AdC
         R3lMtDqw1V8SJ1Kq2JaOOrCtPa51um9yk96W1HTBgnv3Y+19zj73XMcqcLlcT5xO53fwVPgNtkfiXh8Q
         fB0MBlW/39f0+/0KtoK4bwckpsBtdPhATLTtJJNJNZ1ONePxOAt8EDdX+BDvn8DnYrIHAhoIvgiHwxT4
         DTbBLnjGzs0CnU6Hfm6VAbbBw0gkopD7F89lkVsEHC8RoFqtlhqPxyqfz6tQKKRZrVZn4ibL5bLitrGZ
