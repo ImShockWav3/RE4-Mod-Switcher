@@ -32,7 +32,7 @@ namespace ModChanger
                 string[] lines = {
                     "[SETTINGS]",
                     "path=",
-                    "currentmod=Original",
+                    "curr=Original",
                     "",
                     "[MODS]"
                 };
@@ -47,7 +47,7 @@ namespace ModChanger
                     string line = reader.ReadLine();
                     string[] split = line.Split('|');
                     string[] readSettings = File.ReadAllLines(settings);
-                    currentMod = readSettings[2].Replace("currentmod=", "");
+                    currentMod = readSettings[2].Replace("curr=", "");
 
                     if (line.StartsWith("path="))
                     {
@@ -86,6 +86,8 @@ namespace ModChanger
 
         }
 
+        
+
         private void Restore()
         {
             selectedMod = Convert.ToString(comboBox1.Text);
@@ -95,10 +97,12 @@ namespace ModChanger
             {
                 while (!reader.EndOfStream)
                 {
-                    string changeMod = reader.ReadLine();
-                    string[] split = changeMod.Split('|');
+                    string line = reader.ReadLine();
+                    string[] split = line.Split('|');
+                    string[] readSettings = File.ReadAllLines(settings);
+                    currentMod = readSettings[2].Replace("curr=", "");
 
-                    if (changeMod.StartsWith("mod="))
+                    if (line.StartsWith($"mod={currentMod}"))
                     {
                         using (var reader2 = new StreamReader(split[1] + @"\files.txt"))
                         {
@@ -106,25 +110,22 @@ namespace ModChanger
                             {
                                 string readFiles = reader2.ReadLine();
                                 string File = readFiles.Replace("file=", "\\");
-                                string[] folder = readFiles.Split('\\');
+                                //string[] folder = readFiles.Split('\\');
                                 string gamePath = textBox1.Text;
                                 bool checkModFile = System.IO.File.Exists(split[1] + File);
                                 bool checkFile = System.IO.File.Exists(gamePath + File + ".bak");
                                 bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs.bak");
 
-                                if (readFiles.StartsWith("file=") && !readFiles.Contains("files.txt"))
+                                if (!readFiles.Contains("files.txt"))
                                 {
-                                    if (!System.IO.File.Exists(split[1] + File))
-                                    {
-                                        System.IO.File.Move(gamePath + File, split[1] + File);
-                                    }
+                                    System.IO.File.Move(gamePath + File, split[1] + File);
 
                                     if (checkFile)
                                     {
                                         System.IO.File.Move(gamePath + File + ".bak", gamePath + File);
                                     }
 
-                                    else if (checkLfsFile)
+                                    if (checkLfsFile)
                                     {
                                         System.IO.File.Move(gamePath + File + ".lfs.bak", gamePath + File + ".lfs");
                                     }
@@ -141,22 +142,65 @@ namespace ModChanger
                 reader.Close();
             }
 
-            if (Switcher == true)
-            {
-                string[] readSettings = File.ReadAllLines(settings);
-                readSettings[2] = "currentmod=" + selectedMod;
-                File.WriteAllLines(settings, readSettings);
-            }
+            //if (Switcher == true)
+            //{
+            //string[] readSettings = File.ReadAllLines(settings);
+            //readSettings[2] = "curr=" + selectedMod;
+            //File.WriteAllLines(settings, readSettings);
+            //}
 
-            Switcher = false;
+            //Switcher = false;
+        }
+
+        private void RestoreTest()
+        {
+            string[] Settings = File.ReadAllLines(settings);
+            string currentMod = Settings[2].Replace("curr=", "");
+            int modLine = GetLineNumber(settings, $"mod={currentMod}");
+
+            string gamePath = Settings[1].ToString().Split('=')[1];
+            string modPath = Settings[modLine].ToString().Split('|')[1];
+
+            using (var r = new StreamReader(modPath + "\\files.txt"))
+            {
+                while (!r.EndOfStream)
+                {
+                    string line = r.ReadLine();
+                    string file = line.Replace("file=", "\\");
+                    bool checkFile = File.Exists(gamePath + file + ".bak");
+                    bool checkLfsFile = File.Exists(gamePath + file + ".lfs.bak");
+
+                    if (!File.Exists(modPath + file))
+                    {
+                        File.Move(gamePath + file, modPath + file);
+                    }
+
+                    if (checkFile)
+                    {
+                        File.Move(gamePath + file + ".bak", gamePath + file);
+                    }
+
+                    if (checkLfsFile)
+                    {
+                        File.Move(gamePath + file + ".lfs.bak", gamePath + file + ".lfs");
+                    }
+                }
+
+                r.Close();
+            }
+        }
+
+        private void installTest()
+        {
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string[] Settings = File.ReadAllLines(settings);
+            currentMod = Settings[2].Replace("curr=", "");
             selectedMod = Convert.ToString(comboBox1.Text);
-            selectedDiff = Convert.ToString(comboBox2.Text);
-            string[] readSettings = File.ReadAllLines(settings);
-            currentMod = readSettings[2].Replace("currentmod=", "");
+
 
             if (selectedMod == "Original" && currentMod == "Original")
             {
@@ -165,86 +209,70 @@ namespace ModChanger
 
             else if (selectedMod == "Original" && currentMod != "Original")
             {
+                RestoreTest();
                 MessageBox.Show("Restoring...");
-                Restore();
+                Settings[2] = "curr=Original";
+                File.WriteAllLines(settings, Settings);
             }
 
-            using (var reader = new StreamReader(settings))
+            else
             {
-                while (!reader.EndOfStream)
+                if (selectedMod != currentMod)
                 {
-                    string changeMod = reader.ReadLine();
-                    string[] split = changeMod.Split('|');
+                    int modLine = GetLineNumber(settings, $"mod={selectedMod}");
+                    string gamePath = Settings[1].ToString().Split('=')[1];
+                    string modPath = Settings[modLine].ToString().Split('|')[1];
 
-                    if (changeMod.StartsWith("mod=") && (comboBox1.Text == split[0].Replace("mod=","")))
+                    using (var r = new StreamReader(modPath + "\\files.txt"))
                     {
-                        if (selectedMod != currentMod)
+                        while (!r.EndOfStream)
                         {
+                            string line = r.ReadLine();
+                            string file = line.Replace("file=", "\\");
+                            bool checkFile = File.Exists(gamePath + file) && !File.Exists(gamePath + file + ".bak");
+                            bool checkLfsFile = File.Exists(gamePath + file + ".lfs") && !File.Exists(gamePath + file + ".lfs.bak");
+
                             if (currentMod != "Original")
                             {
-                                Restore();
+                                RestoreTest();
+                                wait(3000);
                             }
 
-                            MessageBox.Show("Installing " + selectedMod + ". Directory is: " + split[1]);
-
-                            using (var reader2 = new StreamReader(split[1] + @"\files.txt"))
+                            if (checkFile)
                             {
-                                while (!reader2.EndOfStream)
-                                {
-                                    
-                                    string readFiles = reader2.ReadLine();
-                                    string File = readFiles.Replace("file=", "\\");
-                                    string[] folder = readFiles.Split('\\');
-                                    string gamePath = textBox1.Text;
-                                    bool checkModFile = System.IO.File.Exists(split[1] + File);
-                                    bool checkFile = System.IO.File.Exists(gamePath + File);
-                                    bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs");
-
-                                    
-                                    if (readFiles.StartsWith("file=") && !readFiles.Contains("files.txt"))
-                                    {
-
-                                        if (checkFile)
-                                        {
-                                            System.IO.File.Move(gamePath + File, gamePath + File + ".bak");
-                                        }
-
-                                        else if (checkLfsFile)
-                                        {
-                                            System.IO.File.Move(gamePath + File + ".lfs", gamePath + File + ".lfs.bak");
-                                        }
-
-                                        if (!System.IO.File.Exists(gamePath + File))
-                                        {
-                                            System.IO.File.Move(split[1] + File, gamePath + File);
-                                        }
-
-                                        Switcher = true;
-                                        
-                                    }
-                                }
-
-                                reader2.Close();
+                                File.Move(gamePath + file, gamePath + file + ".bak");
                             }
-                        }   
 
-                        else
-                        {
-                            MessageBox.Show(selectedMod + " is already installed.");
+                            if (checkLfsFile)
+                            {
+                                File.Move(gamePath + file + ".lfs", gamePath + file + ".lfs.bak");
+                            }
+
+                            if (File.Exists(modPath + file) && !File.Exists(gamePath + file))
+                            {
+                                File.Move(modPath + file, gamePath + file);
+                            }
+
+                            Switcher = true;
                         }
+
+                        r.Close();
                     }
                 }
 
-                reader.Close();
-            }
+                else
+                {
+                    MessageBox.Show($"{selectedMod} is already installed.");
+                }
 
-            if (Switcher == true)
-            {
-                readSettings[2] = "currentmod=" + selectedMod;
-                File.WriteAllLines(settings, readSettings);
-            }
+                if (Switcher == true)
+                {
+                    Settings[2] = "curr=" + selectedMod;
+                    File.WriteAllLines(settings, Settings);
+                }
 
-            Switcher = false;
+                Switcher = false;
+            }
         }
 
 
@@ -305,6 +333,45 @@ namespace ModChanger
                 }
 
                 reader.Close();
+            }
+        }
+
+        private int GetLineNumber(string file, string contains)
+        {
+            string[] readSettings = File.ReadAllLines(file);
+            int totalLines = File.ReadAllLines(file).Count();
+            int lineNumber = 0;
+
+            while (lineNumber <= totalLines)
+            {
+                lineNumber++;
+                if (readSettings[lineNumber].Contains(contains))
+                {
+                    break;
+                }
+            }
+
+            return lineNumber;
+        }
+
+        public void wait(int milliseconds)
+        {
+            var timer2 = new System.Windows.Forms.Timer();
+            if (milliseconds == 0 || milliseconds < 0) return;
+
+            timer2.Interval = milliseconds;
+            timer2.Enabled = true;
+            timer2.Start();
+
+            timer2.Tick += (s, e) =>
+            {
+                timer2.Enabled = false;
+                timer2.Stop();
+            };
+
+            while (timer2.Enabled)
+            {
+                Application.DoEvents();
             }
         }
 

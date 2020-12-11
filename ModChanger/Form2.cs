@@ -72,7 +72,10 @@ namespace ModChanger
 
                 foreach (string filename in GetFiles)
                 {
-                    writer.WriteLine("file=" + filename.Remove(0,modLength));
+                    if (!filename.StartsWith("files.txt"))
+                    {
+                        writer.WriteLine("file=" + filename.Remove(0, modLength));
+                    }
                 }
 
                 writer.Close();
