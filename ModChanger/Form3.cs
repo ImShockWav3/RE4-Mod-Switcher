@@ -69,17 +69,14 @@ namespace ModChanger
 
         private int GetLineNumber(string file, string contains)
         {
-            string[] readSettings = File.ReadAllLines(file);
+            string[] line = File.ReadAllLines(file);
             int totalLines = File.ReadAllLines(file).Count();
             int lineNumber = 0;
 
             while (lineNumber <= totalLines)
             {
                 lineNumber++;
-                if (readSettings[lineNumber].Contains(contains))
-                {
-                    break;
-                }
+                if (line[lineNumber].Contains(contains)) { break; }
             }
 
             return lineNumber;
@@ -104,6 +101,26 @@ namespace ModChanger
             }
         }
 
+        private void RemoveLine(string filePath, string content)
+        {
+            using (var writer = new StreamWriter(filePath + ".temp.txt"))
+            using (var reader = new StreamReader(filePath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    if (!line.Contains(content))
+                    {
+                        writer.WriteLine(line);
+                    }
+                }
+            }
+
+            File.Delete(filePath);
+            File.Move(filePath + ".temp.txt", filePath);
+        }
+
         private void btn_Delete_Click(object sender, EventArgs e)
         {
 
@@ -111,29 +128,15 @@ namespace ModChanger
             {
                 var result = MessageBox.Show(
                     $"Are you sure you want to delete \"{modList.SelectedItem}\"?", "Are you sure?",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                    );
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    using (var writer = new StreamWriter(settings + ".temp.txt"))
-                    using (var reader = new StreamReader(settings))
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            string line = reader.ReadLine();
+                    RemoveLine(settings, $"mod={modList.SelectedItem}");
 
-                            if (!line.StartsWith($"mod={modList.SelectedItem}"))
-                            {
-                                writer.WriteLine(line);
-                            }
-                        }
-                    }
-
-                    File.Delete(settings);
-                    File.Move(settings + ".temp.txt", settings);
                     txtName.Text = "";
                     txtPath.Text = "";
+
                     modList.Items.Clear();
                     RefreshList();
                 }
