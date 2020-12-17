@@ -52,15 +52,15 @@ namespace ModChanger
 
             if (result == DialogResult.Yes)
             {
+                string[] Settings = File.ReadAllLines(settings);
                 string indexedMod = Convert.ToString(modList.SelectedItem);
                 int line = GetLineNumber(settings, $"mod={indexedMod}");
 
-                string[] readSettings = File.ReadAllLines(settings);
-                readSettings[line] = $"mod={txtName.Text}|{txtPath.Text}";
-                File.WriteAllLines(settings, readSettings);
+                Settings[line] = $"mod={txtName.Text}|{txtPath.Text}";
+                File.WriteAllLines(settings, Settings);
 
-                txtName.Text = "";
-                txtPath.Text = "";
+                txtName.Clear();
+                txtPath.Clear();
 
                 modList.Items.Clear();
                 RefreshList();
@@ -73,7 +73,7 @@ namespace ModChanger
             int totalLines = File.ReadAllLines(file).Count();
             int lineNumber = 0;
 
-            while (lineNumber <= totalLines)
+            while (lineNumber < totalLines)
             {
                 lineNumber++;
                 if (line[lineNumber].Contains(contains)) { break; }
