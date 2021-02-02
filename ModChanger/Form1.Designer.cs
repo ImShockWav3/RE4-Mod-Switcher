@@ -45,6 +45,8 @@ namespace ModChanger
             this.button_refreshModList = new System.Windows.Forms.Button();
             this.btn_Settings = new System.Windows.Forms.Button();
             this.Tip_Settings = new System.Windows.Forms.ToolTip(this.components);
+            this.pBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -187,11 +189,31 @@ namespace ModChanger
             this.btn_Settings.UseVisualStyleBackColor = true;
             this.btn_Settings.Click += new System.EventHandler(this.btn_Settings_Click);
             // 
+            // pBar1
+            // 
+            this.pBar1.Location = new System.Drawing.Point(14, 293);
+            this.pBar1.Name = "pBar1";
+            this.pBar1.Size = new System.Drawing.Size(504, 29);
+            this.pBar1.Step = 3;
+            this.pBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pBar1.TabIndex = 13;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(14, 270);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(69, 20);
+            this.lblStatus.TabIndex = 14;
+            this.lblStatus.Text = "Waiting...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 272);
+            this.ClientSize = new System.Drawing.Size(533, 339);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.pBar1);
             this.Controls.Add(this.btn_Settings);
             this.Controls.Add(this.button_refreshModList);
             this.Controls.Add(this.label4);
@@ -231,6 +253,8 @@ namespace ModChanger
         private System.Windows.Forms.Button button_refreshModList;
         private System.Windows.Forms.Button btn_Settings;
         private System.Windows.Forms.ToolTip Tip_Settings;
+        private System.Windows.Forms.ProgressBar pBar1;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 

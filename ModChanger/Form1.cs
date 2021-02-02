@@ -17,7 +17,6 @@ namespace ModChanger
     {
         string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
         string selectedMod;
-        string selectedDiff;
         string currentMod;
         bool Switcher = false;
 
@@ -86,73 +85,7 @@ namespace ModChanger
 
         }
 
-        
-
         private void Restore()
-        {
-            selectedMod = Convert.ToString(comboBox1.Text);
-            selectedDiff = Convert.ToString(comboBox2.Text);
-
-            using (var reader = new StreamReader(settings))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    string[] split = line.Split('|');
-                    string[] readSettings = File.ReadAllLines(settings);
-                    currentMod = readSettings[2].Replace("curr=", "");
-
-                    if (line.StartsWith($"mod={currentMod}"))
-                    {
-                        using (var reader2 = new StreamReader(split[1] + @"\files.txt"))
-                        {
-                            while (!reader2.EndOfStream)
-                            {
-                                string readFiles = reader2.ReadLine();
-                                string File = readFiles.Replace("file=", "\\");
-                                //string[] folder = readFiles.Split('\\');
-                                string gamePath = textBox1.Text;
-                                bool checkModFile = System.IO.File.Exists(split[1] + File);
-                                bool checkFile = System.IO.File.Exists(gamePath + File + ".bak");
-                                bool checkLfsFile = System.IO.File.Exists(gamePath + File + ".lfs.bak");
-
-                                if (!readFiles.Contains("files.txt"))
-                                {
-                                    System.IO.File.Move(gamePath + File, split[1] + File);
-
-                                    if (checkFile)
-                                    {
-                                        System.IO.File.Move(gamePath + File + ".bak", gamePath + File);
-                                    }
-
-                                    if (checkLfsFile)
-                                    {
-                                        System.IO.File.Move(gamePath + File + ".lfs.bak", gamePath + File + ".lfs");
-                                    }
-
-                                    Switcher = true;
-                                }
-                            }
-
-                            reader2.Close();
-                        }
-                    }
-                }
-
-                reader.Close();
-            }
-
-            //if (Switcher == true)
-            //{
-            //string[] readSettings = File.ReadAllLines(settings);
-            //readSettings[2] = "curr=" + selectedMod;
-            //File.WriteAllLines(settings, readSettings);
-            //}
-
-            //Switcher = false;
-        }
-
-        private void RestoreTest()
         {
             string[] Settings = File.ReadAllLines(settings);
             string currentMod = Settings[2].Replace("curr=", "");
@@ -162,6 +95,9 @@ namespace ModChanger
             string modPath = Settings[modLine].ToString().Split('|')[1];
 
             string[] files = File.ReadAllLines(modPath + "\\files.txt");
+
+            pBar1.Value = 0;
+            pBar1.Maximum = files.Length;
 
             foreach (string f in files)
             {
@@ -181,10 +117,17 @@ namespace ModChanger
                 {
                     File.Move(gamePath + file + ".lfs.bak", gamePath + file + ".lfs");
                 }
+
+                pBar1.PerformStep();
+
+                if (pBar1.Value == pBar1.Maximum)
+                {
+                    lblStatus.Text = $"{selectedMod} has been installed.";
+                }
             }
         }
 
-        private void installTest()
+        private void Install()
         {
             string[] Settings = File.ReadAllLines(settings);
             string selectedMod = Convert.ToString(comboBox1.Text);
@@ -194,6 +137,9 @@ namespace ModChanger
             string modPath = Settings[modLine].ToString().Split('|')[1];
 
             string[] files = File.ReadAllLines(modPath + "\\files.txt");
+
+            pBar1.Value = 0;
+            pBar1.Maximum = files.Length;
 
             foreach (string f in files)
             {
@@ -213,6 +159,13 @@ namespace ModChanger
                 {
                     File.Move(modPath + file, gamePath + file);
                 }
+
+                pBar1.PerformStep();
+                
+                if (pBar1.Value == pBar1.Maximum)
+                {
+                    lblStatus.Text = "The game has been restored to default.";
+                }
             }
         }
 
@@ -229,10 +182,11 @@ namespace ModChanger
 
             else if (selectedMod == "Original" && currentMod != "Original")
             {
-                RestoreTest();
-                MessageBox.Show("Restoring...");
+                lblStatus.Text = "Restoring...";
+                Restore();
                 Settings[2] = "curr=Original";
                 File.WriteAllLines(settings, Settings);
+                lblStatus.Text = "The game has been restored to default.";
             }
 
             else
@@ -241,10 +195,15 @@ namespace ModChanger
                 {
                     if (currentMod != "Original")
                     {
-                        RestoreTest();
+                        Restore();
+                        if (pBar1.Value == pBar1.Maximum)
+                        {
+                            pBar1.Value = 0;
+                        }
                     }
 
-                    installTest();
+                    lblStatus.Text = $"Installing {selectedMod}...";
+                    Install();
 
                     Switcher = true;
                 }
@@ -327,17 +286,14 @@ namespace ModChanger
 
         private int GetLineNumber(string file, string contains)
         {
-            string[] readSettings = File.ReadAllLines(file);
+            string[] line = File.ReadAllLines(file);
             int totalLines = File.ReadAllLines(file).Count();
             int lineNumber = 0;
 
             while (lineNumber < totalLines)
             {
                 lineNumber++;
-                if (readSettings[lineNumber].Contains(contains))
-                {
-                    break;
-                }
+                if (line[lineNumber].Contains(contains)) { break; }
             }
 
             return lineNumber;
@@ -345,7 +301,7 @@ namespace ModChanger
 
         public void wait(int milliseconds)
         {
-            var timer2 = new System.Windows.Forms.Timer();
+            var timer2 = new Timer();
             if (milliseconds == 0 || milliseconds < 0) return;
 
             timer2.Interval = milliseconds;
