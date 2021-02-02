@@ -120,10 +120,6 @@ namespace ModChanger
 
                 pBar1.PerformStep();
 
-                if (pBar1.Value == pBar1.Maximum)
-                {
-                    lblStatus.Text = $"{selectedMod} has been installed.";
-                }
             }
         }
 
@@ -164,7 +160,7 @@ namespace ModChanger
                 
                 if (pBar1.Value == pBar1.Maximum)
                 {
-                    lblStatus.Text = "The game has been restored to default.";
+                    lblStatus.Text = $"{selectedMod} has been installed.";
                 }
             }
         }
@@ -182,11 +178,14 @@ namespace ModChanger
 
             else if (selectedMod == "Original" && currentMod != "Original")
             {
-                lblStatus.Text = "Restoring...";
                 Restore();
+                if (pBar1.Value == pBar1.Maximum)
+                {
+                    lblStatus.Text = "The game has been restored to default.";
+                }
+
                 Settings[2] = "curr=Original";
                 File.WriteAllLines(settings, Settings);
-                lblStatus.Text = "The game has been restored to default.";
             }
 
             else
@@ -202,9 +201,7 @@ namespace ModChanger
                         }
                     }
 
-                    lblStatus.Text = $"Installing {selectedMod}...";
                     Install();
-
                     Switcher = true;
                 }
 
@@ -268,15 +265,35 @@ namespace ModChanger
             {
                 while (!reader.EndOfStream)
                 {
-                    string newMod = reader.ReadLine();
-                    string[] split = newMod.Split('|');
+                    string list = reader.ReadLine();
+                    // string[] mod = list.Split('|');
+                    string mod = list.Split('|')[0];
 
-                    if (newMod.StartsWith("mod="))
+                    if (list.StartsWith("mod="))
                     {
-                        if (!comboBox1.Items.Contains(split[0].Replace("mod=", "")))
+                        if (!comboBox1.Items.Contains(mod.Replace("mod=", "")))
                         {
-                            comboBox1.Items.Add(split[0].Replace("mod=", ""));
+                            comboBox1.Items.Add(mod.Replace("mod=", ""));
                         }
+                    }
+                }
+
+                reader.Close();
+            }
+        }
+
+        private void RefreshList()
+        {
+            using (var reader = new StreamReader(settings))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string list = reader.ReadLine();
+                    string mod = list.Split('|')[0];
+
+                    if (list.StartsWith("mod=") && !comboBox1.Items.Contains(mod.Replace("mod=", "")))
+                    {
+                        comboBox1.Items.Add(mod.Replace("mod=", ""));
                     }
                 }
 
@@ -335,6 +352,32 @@ namespace ModChanger
         {
             Form4 f4 = new Form4();
             f4.ShowDialog();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            string currentMod = File.ReadAllLines(settings)[2].Replace("curr=", "");
+
+            using (var r = new StreamReader(settings))
+            {
+                while (!r.EndOfStream)
+                {
+                    string line = r.ReadLine();
+                    string[] split = line.Split('|');
+
+                    if (line.StartsWith("mod=") && !comboBox1.Items.Contains(split[0].Replace("mod=", "")))
+                    {
+                        comboBox1.Items.Clear();
+                        comboBox1.Items.Add("Original");
+                        RefreshList();
+                        comboBox1.SelectedItem = currentMod;
+                    }
+                }
+
+                r.Close();
+            }
+
+            RefreshList();
         }
     }
 }

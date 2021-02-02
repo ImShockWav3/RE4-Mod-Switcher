@@ -48,13 +48,20 @@ namespace ModChanger
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
+            string[] Settings = File.ReadAllLines(settings);
+            string selectedMod = Convert.ToString(modList.SelectedItem);
+            string currentMod = Settings[2].Replace("curr=", "");
+
             DialogResult result = MessageBox.Show("Are you sure you want to overwrite the current settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                string[] Settings = File.ReadAllLines(settings);
-                string indexedMod = Convert.ToString(modList.SelectedItem);
-                int line = GetLineNumber(settings, $"mod={indexedMod}");
+                if (selectedMod == currentMod)
+                {
+                    Settings[2] = $"curr={txtName.Text}";
+                }
+
+                int line = GetLineNumber(settings, $"mod={selectedMod}");
 
                 Settings[line] = $"mod={txtName.Text}|{txtPath.Text}";
                 File.WriteAllLines(settings, Settings);
@@ -65,6 +72,7 @@ namespace ModChanger
                 modList.Items.Clear();
                 RefreshList();
             }
+
         }
 
         private int GetLineNumber(string file, string contains)
@@ -123,22 +131,32 @@ namespace ModChanger
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+            string[] Settings = File.ReadAllLines(settings);
+            string currentMod = Settings[2].Replace("curr=", "");
+            string selectedMod = modList.SelectedItem.ToString();
 
             if (modList.SelectedItem != null)
             {
-                var result = MessageBox.Show(
-                    $"Are you sure you want to delete \"{modList.SelectedItem}\"?", "Are you sure?",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                if (result == DialogResult.Yes)
+                if (selectedMod != currentMod)
                 {
-                    RemoveLine(settings, $"mod={modList.SelectedItem}");
+                    var result = MessageBox.Show(
+                        $"Are you sure you want to delete \"{selectedMod}\"?", "Are you sure?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                    txtName.Text = "";
-                    txtPath.Text = "";
+                    if (result == DialogResult.Yes)
+                    {
+                        RemoveLine(settings, $"mod={selectedMod}");
 
-                    modList.Items.Clear();
-                    RefreshList();
+                        txtName.Text = "";
+                        txtPath.Text = "";
+                        modList.Items.Clear();
+
+                        RefreshList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"You can not delete \"{selectedMod}\" because it is currently in use.");
                 }
             }
             else

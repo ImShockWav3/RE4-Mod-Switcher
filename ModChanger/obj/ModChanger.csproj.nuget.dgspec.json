@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj": {}
+    "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj": {
+    "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
+        "projectUniqueName": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
         "projectName": "ModChanger",
-        "projectPath": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
+        "projectPath": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\ModChanger.csproj",
         "packagesPath": "C:\\Users\\nices\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nices\\Documents\\GitHub\\RE4-Mod-Switcher\\ModChanger\\obj\\",
+        "outputPath": "D:\\João\\Documentos\\GitHub\\RE4-Mod-Switcher\\ModChanger\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nices\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,7 +57,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

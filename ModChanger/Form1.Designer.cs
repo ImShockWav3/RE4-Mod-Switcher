@@ -47,14 +47,14 @@ namespace ModChanger
             this.Tip_Settings = new System.Windows.Forms.ToolTip(this.components);
             this.pBar1 = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(193, 220);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button1.Location = new System.Drawing.Point(169, 165);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 31);
+            this.button1.Size = new System.Drawing.Size(79, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
@@ -66,10 +66,9 @@ namespace ModChanger
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Original"});
-            this.comboBox1.Location = new System.Drawing.Point(14, 181);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.comboBox1.Location = new System.Drawing.Point(12, 136);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(172, 28);
+            this.comboBox1.Size = new System.Drawing.Size(151, 23);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -86,27 +85,25 @@ namespace ModChanger
             "Ultra Hard +",
             "Impossible",
             "Impossible +"});
-            this.comboBox2.Location = new System.Drawing.Point(14, 220);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.comboBox2.Location = new System.Drawing.Point(12, 165);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(172, 28);
+            this.comboBox2.Size = new System.Drawing.Size(151, 23);
             this.comboBox2.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 157);
+            this.label1.Location = new System.Drawing.Point(12, 118);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 20);
+            this.label1.Size = new System.Drawing.Size(78, 15);
             this.label1.TabIndex = 4;
             this.label1.Text = "Select a mod:";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(347, 220);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button2.Location = new System.Drawing.Point(304, 165);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(171, 31);
+            this.button2.Size = new System.Drawing.Size(150, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Manage mods";
             this.button2.UseVisualStyleBackColor = true;
@@ -114,10 +111,9 @@ namespace ModChanger
             // 
             // button_browseFiles
             // 
-            this.button_browseFiles.Location = new System.Drawing.Point(347, 181);
-            this.button_browseFiles.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button_browseFiles.Location = new System.Drawing.Point(304, 136);
             this.button_browseFiles.Name = "button_browseFiles";
-            this.button_browseFiles.Size = new System.Drawing.Size(171, 31);
+            this.button_browseFiles.Size = new System.Drawing.Size(150, 23);
             this.button_browseFiles.TabIndex = 6;
             this.button_browseFiles.Text = "Browse folder";
             this.button_browseFiles.UseVisualStyleBackColor = true;
@@ -125,45 +121,43 @@ namespace ModChanger
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(14, 12);
+            this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(230, 31);
+            this.label2.Size = new System.Drawing.Size(201, 23);
             this.label2.TabIndex = 7;
             this.label2.Text = "RE4 Mod Changer by ShockWav3";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(250, 12);
+            this.label3.Location = new System.Drawing.Point(219, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 20);
+            this.label3.Size = new System.Drawing.Size(45, 15);
             this.label3.TabIndex = 8;
             this.label3.Text = "(v1.0.0)";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(14, 88);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBox1.Location = new System.Drawing.Point(12, 66);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(505, 27);
+            this.textBox1.Size = new System.Drawing.Size(442, 23);
             this.textBox1.TabIndex = 9;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 64);
+            this.label4.Location = new System.Drawing.Point(12, 48);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(143, 20);
+            this.label4.Size = new System.Drawing.Size(118, 15);
             this.label4.TabIndex = 10;
             this.label4.Text = "Path currently in use:";
             // 
             // button_refreshModList
             // 
-            this.button_refreshModList.Location = new System.Drawing.Point(193, 181);
-            this.button_refreshModList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button_refreshModList.Location = new System.Drawing.Point(169, 136);
             this.button_refreshModList.Name = "button_refreshModList";
-            this.button_refreshModList.Size = new System.Drawing.Size(90, 32);
+            this.button_refreshModList.Size = new System.Drawing.Size(79, 24);
             this.button_refreshModList.TabIndex = 11;
             this.button_refreshModList.Text = "Refresh list";
             this.button_refreshModList.UseVisualStyleBackColor = true;
@@ -180,10 +174,9 @@ namespace ModChanger
             this.btn_Settings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btn_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Settings.ForeColor = System.Drawing.Color.Transparent;
-            this.btn_Settings.Location = new System.Drawing.Point(496, 13);
-            this.btn_Settings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_Settings.Location = new System.Drawing.Point(434, 10);
             this.btn_Settings.Name = "btn_Settings";
-            this.btn_Settings.Size = new System.Drawing.Size(25, 25);
+            this.btn_Settings.Size = new System.Drawing.Size(22, 19);
             this.btn_Settings.TabIndex = 12;
             this.Tip_Settings.SetToolTip(this.btn_Settings, "Settings");
             this.btn_Settings.UseVisualStyleBackColor = true;
@@ -191,27 +184,34 @@ namespace ModChanger
             // 
             // pBar1
             // 
-            this.pBar1.Location = new System.Drawing.Point(14, 293);
+            this.pBar1.Location = new System.Drawing.Point(12, 220);
+            this.pBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pBar1.Name = "pBar1";
-            this.pBar1.Size = new System.Drawing.Size(504, 29);
-            this.pBar1.Step = 3;
+            this.pBar1.Size = new System.Drawing.Size(441, 22);
+            this.pBar1.Step = 5;
             this.pBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pBar1.TabIndex = 13;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(14, 270);
+            this.lblStatus.Location = new System.Drawing.Point(12, 202);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(69, 20);
+            this.lblStatus.Size = new System.Drawing.Size(57, 15);
             this.lblStatus.TabIndex = 14;
             this.lblStatus.Text = "Waiting...";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 400;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 339);
+            this.ClientSize = new System.Drawing.Size(466, 254);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.pBar1);
             this.Controls.Add(this.btn_Settings);
@@ -227,7 +227,6 @@ namespace ModChanger
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -255,6 +254,7 @@ namespace ModChanger
         private System.Windows.Forms.ToolTip Tip_Settings;
         private System.Windows.Forms.ProgressBar pBar1;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
