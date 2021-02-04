@@ -195,10 +195,6 @@ namespace ModChanger
                     if (currentMod != "Original")
                     {
                         Restore();
-                        if (pBar1.Value == pBar1.Maximum)
-                        {
-                            pBar1.Value = 0;
-                        }
                     }
 
                     Install();
