@@ -20,7 +20,14 @@ namespace ModChanger
         {
             InitializeComponent();
 
-            string[] readAllSettings = File.ReadAllLines(configPath);
+            AppendRichText(richTextBox1, "This software was made by ", Color.Black);
+            AppendRichText(richTextBox1, "ShockWav3.\n\n", Color.Red);
+            AppendRichText(richTextBox1, "Please consider subscribing to my ", Color.Black);
+            AppendRichText(richTextBox1, "YouTube ", Color.Red);
+            AppendRichText(richTextBox1, "channel and following me on ", Color.Black);
+            AppendRichText(richTextBox1, "Twitch", Color.Purple);
+            AppendRichText(richTextBox1, ":\nhttps://youtube.com/ShockWav3\nhttps://twitch.tv/ImShockWav3\n\n", Color.Black);
+            AppendRichText(richTextBox1, "This is an early version, so expect bugs. If you experience one, report it to me on my Discord:\n\nShockWav3#5041", Color.Black);
 
             using (var sr = new StreamReader(configPath))
             {
@@ -207,7 +214,7 @@ namespace ModChanger
                         {
                             case 0:
                                 rb_FPSoff.Checked = true;
-                                richTextBox1.AppendText("\nInfo: Please notice that playing with no framecap will indeed solve slowmotion problems. But it will also cause several bugs.\n");
+                                richTextBox1.AppendText("\nInfo: Please notice that playing with no framecap will solve slowmotion problems. But it will also cause several bugs in your gameplay.\n");
                                 break;
 
                             case 30:
@@ -310,7 +317,6 @@ namespace ModChanger
             char motionblur;
             char subtitle;
 
-
             if (chk_EnableVSync.Checked) { vsync = '1'; } else { vsync = '0'; }
             if (chk_EnableFullscreen.Checked) { fullscreen = '1'; } else { fullscreen = '0'; }
 
@@ -404,9 +410,14 @@ namespace ModChanger
                 Config[15] = $"laserA -1";
             }
 
+            var result = MessageBox.Show("Are you sure you want to overwrite the current settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            File.WriteAllLines(configPath, Config);
-
+            if (result == DialogResult.Yes)
+            {
+                File.WriteAllLines(configPath, Config);
+                MessageBox.Show("Settings saved.");
+                Close();
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

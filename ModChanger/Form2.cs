@@ -40,7 +40,7 @@ namespace ModChanger
                 }
                 else
                 {
-                    MessageBox.Show("No mod has been identified. Make sure that the mod folder contains the BIO4 and Bin32 folders within its directory.");
+                    MessageBox.Show("No mod has been identified. Make sure that the mod folder contains the BIO4 and/or Bin32 folders within its directory.");
                 }
 
             }
@@ -57,7 +57,7 @@ namespace ModChanger
                 MessageBox.Show("Please, choose the mod directory.", "Error", MessageBoxButtons.OK);
             }
 
-            else if (textBox2.TextLength <= 5)
+            else if (textBox2.TextLength < 5)
             {
                 MessageBox.Show("The mod name needs to be at least 5 characters long.", "Error", MessageBoxButtons.OK);
             }
@@ -69,34 +69,14 @@ namespace ModChanger
 
             else
             {
-                if (Directory.Exists(modPath + @"\BIO4\snd"))
-                {
-
-                    var result = MessageBox.Show(
-                                    "The folder \"snd\" was found, this means that this mod has its own sounds. Do you wish to separate it in order to be able to use with other mods?",
-                                    "",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question
-                                 );
-
-                    if (result == DialogResult.Yes)
-                    {
-
-                    }
-
-                }
-
                 string[] GetFiles = Directory.GetFiles(modPath, "*.*", SearchOption.AllDirectories);
                 var writer = new StreamWriter(modPath + @"\files.txt", true);
 
                 foreach (string directory in GetFiles)
                 {
-                    if (!directory.Contains(@"\snd\"))
+                    if (!directory.Contains("files.txt"))
                     {
                         writer.WriteLine("file=" + directory.Remove(0, modLength));
-                    }
-                    else
-                    {
-                        writer.WriteLine("snd=" + directory.Remove(0, modLength));
                     }
                 }
 

@@ -270,25 +270,6 @@ namespace ModChanger
             }
         }
 
-        private void RefreshList()
-        {
-            using (var reader = new StreamReader(settings))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string list = reader.ReadLine();
-                    string mod = list.Split('|')[0];
-
-                    if (list.StartsWith("mod=") && !comboBox1.Items.Contains(mod.Replace("mod=", "")))
-                    {
-                        comboBox1.Items.Add(mod.Replace("mod=", ""));
-                    }
-                }
-
-                reader.Close();
-            }
-        }
-
         private int GetLineNumber(string file, string contains)
         {
             string[] line = File.ReadAllLines(file);
@@ -344,41 +325,50 @@ namespace ModChanger
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            string currentMod = File.ReadAllLines(settings)[2].Replace("curr=", "");
-
             if (Process.GetProcessesByName("bio4").Length > 0)
             {
-                lblStatus.Text = "Game is running. You won't be able to change mods or settings.";
+                lblRunning.Visible = true;
+                lblStatus.Visible = false;
                 button1.Enabled = false;
                 btn_Settings.Enabled = false;
             }
             else
             {
-                lblStatus.Text = "Waiting...";
+                lblRunning.Visible = false;
+                lblStatus.Visible = true;
                 button1.Enabled = true;
                 btn_Settings.Enabled = true;
             }
+        }
 
-            using (var r = new StreamReader(settings))
+        private void RefreshList()
+        {
+            using (var reader = new StreamReader(settings))
             {
-                while (!r.EndOfStream)
-                {
-                    string line = r.ReadLine();
-                    string[] split = line.Split('|');
 
-                    if (line.StartsWith("mod=") && !comboBox1.Items.Contains(split[0].Replace("mod=", "")))
+                while (!reader.EndOfStream)
+                {
+                    string list = reader.ReadLine();
+                    string mod = list.Split('|')[0];
+
+                    if (list.StartsWith("mod=") && !comboBox1.Items.Contains(mod.Replace("mod=", "")))
                     {
-                        comboBox1.Items.Clear();
-                        comboBox1.Items.Add("Original");
-                        RefreshList();
-                        comboBox1.SelectedItem = currentMod;
+                        comboBox1.Items.Add(mod.Replace("mod=", ""));
                     }
                 }
 
-                r.Close();
+                reader.Close();
             }
+        }
 
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            string currentMod = File.ReadAllLines(settings)[2].Replace("curr=", "");
+
+            comboBox1.Items.Clear();
+            comboBox1.Items.Add("Original");
             RefreshList();
+            comboBox1.SelectedItem = currentMod;
         }
     }
 }

@@ -46,31 +46,95 @@ namespace ModChanger
             addNewMod.ShowDialog();
         }
 
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtPath.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
         private void btn_Save_Click(object sender, EventArgs e)
         {
             string[] Settings = File.ReadAllLines(settings);
             string selectedMod = Convert.ToString(modList.SelectedItem);
             string currentMod = Settings[2].Replace("curr=", "");
 
-            DialogResult result = MessageBox.Show("Are you sure you want to overwrite the current settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            if (txtName.Text.Length < 5)
             {
-                if (selectedMod == currentMod)
+                MessageBox.Show("The mod name needs to be at least 5 characters long.", "Error", MessageBoxButtons.OK);
+            }
+
+            else if (txtPath.Text.Length == 0)
+            {
+                MessageBox.Show("Please, choose the mod directory.", "Error", MessageBoxButtons.OK);
+            }
+
+            else
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to overwrite the current settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    Settings[2] = $"curr={txtName.Text}";
+                    if (selectedMod == currentMod)
+                    {
+                        Settings[2] = $"curr={txtName.Text}";
+                    }
+
+                    int line = GetLineNumber(settings, $"mod={selectedMod}");
+
+                    Settings[line] = $"mod={txtName.Text}|{txtPath.Text}";
+                    File.WriteAllLines(settings, Settings);
+
+                    txtName.Clear();
+                    txtPath.Clear();
+
+                    modList.Items.Clear();
+                    RefreshList();
                 }
+            }
 
-                int line = GetLineNumber(settings, $"mod={selectedMod}");
+            
+        }
 
-                Settings[line] = $"mod={txtName.Text}|{txtPath.Text}";
-                File.WriteAllLines(settings, Settings);
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            string[] Settings = File.ReadAllLines(settings);
+            string currentMod = Settings[2].Replace("curr=", "");
+            string selectedMod = modList.SelectedItem.ToString();
 
-                txtName.Clear();
-                txtPath.Clear();
+            int modLine = GetLineNumber(settings, $"mod={selectedMod}");
+            string filesTXT = Settings[modLine].Split('|')[1] + "\\files.txt";
 
-                modList.Items.Clear();
-                RefreshList();
+            if (modList.SelectedItem != null)
+            {
+                if (selectedMod != currentMod)
+                {
+                    var result = MessageBox.Show(
+                        $"Are you sure you want to delete \"{selectedMod}\"?", "Are you sure?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        if (File.Exists(filesTXT)) { File.Delete(filesTXT); }
+
+                        RemoveLine(settings, $"mod={selectedMod}");
+
+                        txtName.Text = "";
+                        txtPath.Text = "";
+                        modList.Items.Clear();
+
+                        RefreshList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"You can not delete \"{selectedMod}\" because it is currently in use.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a mod to be deleted.");
             }
 
         }
@@ -127,48 +191,6 @@ namespace ModChanger
 
             File.Delete(filePath);
             File.Move(filePath + ".temp.txt", filePath);
-        }
-
-        private void btn_Delete_Click(object sender, EventArgs e)
-        {
-            string[] Settings = File.ReadAllLines(settings);
-            string currentMod = Settings[2].Replace("curr=", "");
-            string selectedMod = modList.SelectedItem.ToString();
-
-            int modLine = GetLineNumber(settings, $"mod={selectedMod}");
-            string filesTXT = Settings[modLine].Split('|')[1] + "\\files.txt";
-
-            if (modList.SelectedItem != null)
-            {
-                if (selectedMod != currentMod)
-                {
-                    var result = MessageBox.Show(
-                        $"Are you sure you want to delete \"{selectedMod}\"?", "Are you sure?",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        if (File.Exists(filesTXT)) { File.Delete(filesTXT); }
-                        
-                        RemoveLine(settings, $"mod={selectedMod}");
-
-                        txtName.Text = "";
-                        txtPath.Text = "";
-                        modList.Items.Clear();
-
-                        RefreshList();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"You can not delete \"{selectedMod}\" because it is currently in use.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a mod to be deleted.");
-            }
-
         }
 
         private void timer1_Tick(object sender, EventArgs e)

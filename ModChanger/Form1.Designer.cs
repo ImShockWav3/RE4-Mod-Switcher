@@ -48,6 +48,7 @@ namespace ModChanger
             this.lblStatus = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label5 = new System.Windows.Forms.Label();
+            this.lblRunning = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -111,7 +112,7 @@ namespace ModChanger
             // 
             // button_browseFiles
             // 
-            this.button_browseFiles.Location = new System.Drawing.Point(376, 47);
+            this.button_browseFiles.Location = new System.Drawing.Point(378, 73);
             this.button_browseFiles.Name = "button_browseFiles";
             this.button_browseFiles.Size = new System.Drawing.Size(78, 23);
             this.button_browseFiles.TabIndex = 6;
@@ -141,7 +142,7 @@ namespace ModChanger
             this.textBox1.Location = new System.Drawing.Point(12, 73);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(442, 23);
+            this.textBox1.Size = new System.Drawing.Size(360, 23);
             this.textBox1.TabIndex = 9;
             // 
             // label4
@@ -206,11 +207,22 @@ namespace ModChanger
             this.label5.TabIndex = 15;
             this.label5.Text = "Select a soundtrack:";
             // 
+            // lblRunning
+            // 
+            this.lblRunning.AutoSize = true;
+            this.lblRunning.Location = new System.Drawing.Point(12, 206);
+            this.lblRunning.Name = "lblRunning";
+            this.lblRunning.Size = new System.Drawing.Size(344, 15);
+            this.lblRunning.TabIndex = 16;
+            this.lblRunning.Text = "Game is running. You won\'t be able to change mods or settings.";
+            this.lblRunning.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 266);
+            this.Controls.Add(this.lblRunning);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.pBar1);
@@ -230,6 +242,7 @@ namespace ModChanger
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RE4 Mod Changer";
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,6 +267,7 @@ namespace ModChanger
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblRunning;
     }
 }
 
