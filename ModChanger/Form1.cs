@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using System.Diagnostics;
 
 namespace ModChanger
 {
@@ -18,7 +18,6 @@ namespace ModChanger
         string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
         string selectedMod;
         string currentMod;
-        bool Switcher = false;
 
         public Form1()
         {
@@ -198,21 +197,15 @@ namespace ModChanger
                     }
 
                     Install();
-                    Switcher = true;
+
+                    Settings[2] = $"curr={selectedMod}";
+                    File.WriteAllLines(settings, Settings);
                 }
 
                 else
                 {
                     MessageBox.Show($"{selectedMod} is already installed.");
                 }
-
-                if (Switcher == true)
-                {
-                    Settings[2] = $"curr={selectedMod}";
-                    File.WriteAllLines(settings, Settings);
-                }
-
-                Switcher = false;
             }
         }
 
@@ -262,7 +255,6 @@ namespace ModChanger
                 while (!reader.EndOfStream)
                 {
                     string list = reader.ReadLine();
-                    // string[] mod = list.Split('|');
                     string mod = list.Split('|')[0];
 
                     if (list.StartsWith("mod="))
@@ -353,6 +345,19 @@ namespace ModChanger
         private void timer1_Tick(object sender, EventArgs e)
         {
             string currentMod = File.ReadAllLines(settings)[2].Replace("curr=", "");
+
+            if (Process.GetProcessesByName("bio4").Length > 0)
+            {
+                lblStatus.Text = "Game is running. You won't be able to change mods or settings.";
+                button1.Enabled = false;
+                btn_Settings.Enabled = false;
+            }
+            else
+            {
+                lblStatus.Text = "Waiting...";
+                button1.Enabled = true;
+                btn_Settings.Enabled = true;
+            }
 
             using (var r = new StreamReader(settings))
             {

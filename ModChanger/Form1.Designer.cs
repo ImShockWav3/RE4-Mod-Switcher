@@ -42,19 +42,19 @@ namespace ModChanger
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
-            this.button_refreshModList = new System.Windows.Forms.Button();
             this.btn_Settings = new System.Windows.Forms.Button();
             this.Tip_Settings = new System.Windows.Forms.ToolTip(this.components);
             this.pBar1 = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(169, 165);
+            this.button1.Location = new System.Drawing.Point(329, 166);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(79, 23);
+            this.button1.Size = new System.Drawing.Size(124, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
@@ -66,7 +66,7 @@ namespace ModChanger
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Original"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 136);
+            this.comboBox1.Location = new System.Drawing.Point(136, 137);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(151, 23);
             this.comboBox1.TabIndex = 1;
@@ -85,7 +85,7 @@ namespace ModChanger
             "Ultra Hard +",
             "Impossible",
             "Impossible +"});
-            this.comboBox2.Location = new System.Drawing.Point(12, 165);
+            this.comboBox2.Location = new System.Drawing.Point(136, 166);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(151, 23);
             this.comboBox2.TabIndex = 2;
@@ -93,7 +93,7 @@ namespace ModChanger
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 118);
+            this.label1.Location = new System.Drawing.Point(12, 140);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 15);
             this.label1.TabIndex = 4;
@@ -101,9 +101,9 @@ namespace ModChanger
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(304, 165);
+            this.button2.Location = new System.Drawing.Point(329, 136);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(150, 23);
+            this.button2.Size = new System.Drawing.Size(125, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Manage mods";
             this.button2.UseVisualStyleBackColor = true;
@@ -111,11 +111,11 @@ namespace ModChanger
             // 
             // button_browseFiles
             // 
-            this.button_browseFiles.Location = new System.Drawing.Point(304, 136);
+            this.button_browseFiles.Location = new System.Drawing.Point(376, 47);
             this.button_browseFiles.Name = "button_browseFiles";
-            this.button_browseFiles.Size = new System.Drawing.Size(150, 23);
+            this.button_browseFiles.Size = new System.Drawing.Size(78, 23);
             this.button_browseFiles.TabIndex = 6;
-            this.button_browseFiles.Text = "Browse folder";
+            this.button_browseFiles.Text = "Browse";
             this.button_browseFiles.UseVisualStyleBackColor = true;
             this.button_browseFiles.Click += new System.EventHandler(this.button_browseFiles_Click);
             // 
@@ -138,7 +138,7 @@ namespace ModChanger
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 66);
+            this.textBox1.Location = new System.Drawing.Point(12, 73);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(442, 23);
@@ -147,21 +147,11 @@ namespace ModChanger
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 48);
+            this.label4.Location = new System.Drawing.Point(12, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(118, 15);
             this.label4.TabIndex = 10;
             this.label4.Text = "Path currently in use:";
-            // 
-            // button_refreshModList
-            // 
-            this.button_refreshModList.Location = new System.Drawing.Point(169, 136);
-            this.button_refreshModList.Name = "button_refreshModList";
-            this.button_refreshModList.Size = new System.Drawing.Size(79, 24);
-            this.button_refreshModList.TabIndex = 11;
-            this.button_refreshModList.Text = "Refresh list";
-            this.button_refreshModList.UseVisualStyleBackColor = true;
-            this.button_refreshModList.Click += new System.EventHandler(this.button_refreshModList_Click);
             // 
             // btn_Settings
             // 
@@ -184,7 +174,7 @@ namespace ModChanger
             // 
             // pBar1
             // 
-            this.pBar1.Location = new System.Drawing.Point(12, 220);
+            this.pBar1.Location = new System.Drawing.Point(12, 224);
             this.pBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pBar1.Name = "pBar1";
             this.pBar1.Size = new System.Drawing.Size(441, 22);
@@ -195,7 +185,7 @@ namespace ModChanger
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(12, 202);
+            this.lblStatus.Location = new System.Drawing.Point(12, 206);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(57, 15);
             this.lblStatus.TabIndex = 14;
@@ -207,15 +197,24 @@ namespace ModChanger
             this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 169);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(112, 15);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Select a soundtrack:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 254);
+            this.ClientSize = new System.Drawing.Size(466, 266);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.pBar1);
             this.Controls.Add(this.btn_Settings);
-            this.Controls.Add(this.button_refreshModList);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
@@ -249,12 +248,12 @@ namespace ModChanger
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button_refreshModList;
         private System.Windows.Forms.Button btn_Settings;
         private System.Windows.Forms.ToolTip Tip_Settings;
         private System.Windows.Forms.ProgressBar pBar1;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label5;
     }
 }
 

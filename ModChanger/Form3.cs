@@ -135,6 +135,9 @@ namespace ModChanger
             string currentMod = Settings[2].Replace("curr=", "");
             string selectedMod = modList.SelectedItem.ToString();
 
+            int modLine = GetLineNumber(settings, $"mod={selectedMod}");
+            string filesTXT = Settings[modLine].Split('|')[1] + "\\files.txt";
+
             if (modList.SelectedItem != null)
             {
                 if (selectedMod != currentMod)
@@ -145,6 +148,8 @@ namespace ModChanger
 
                     if (result == DialogResult.Yes)
                     {
+                        if (File.Exists(filesTXT)) { File.Delete(filesTXT); }
+                        
                         RemoveLine(settings, $"mod={selectedMod}");
 
                         txtName.Text = "";

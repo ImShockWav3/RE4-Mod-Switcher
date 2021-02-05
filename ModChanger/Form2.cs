@@ -14,14 +14,11 @@ namespace ModChanger
     public partial class Form2 : Form
     {
         string settings = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini";
-        string modPath;
-        string[] GetFiles;
         public string gamePath;
 
         public Form2()
         {
             InitializeComponent();
-            radioButton2.Checked = true;
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -37,7 +34,7 @@ namespace ModChanger
             {
                 string path = folderBrowserDialog1.SelectedPath;
 
-                if (Directory.Exists(path + @"\Bin32") || Directory.Exists(path + @"\BIO4"))
+                if (Directory.Exists(path + @"\Bin32") || Directory.Exists(path + @"\BIO4") || Directory.Exists(path + @"\FILES"))
                 {
                     textBox1.Text = folderBrowserDialog1.SelectedPath;
                 }
@@ -52,29 +49,54 @@ namespace ModChanger
 
         public void btnConfirm_Click(object sender, EventArgs e)
         {
+            string modPath = textBox1.Text;
+            int modLength = textBox1.Text.Length + 1;
+
             if (textBox1.TextLength == 0)
             {
                 MessageBox.Show("Please, choose the mod directory.", "Error", MessageBoxButtons.OK);
             }
+
             else if (textBox2.TextLength <= 5)
             {
                 MessageBox.Show("The mod name needs to be at least 5 characters long.", "Error", MessageBoxButtons.OK);
             }
+
+            else if (File.Exists(modPath + "\\files.txt"))
+            {
+                MessageBox.Show("This mod is already in the list.", "Error", MessageBoxButtons.OK);
+            }
+
             else
             {
-                modPath = textBox1.Text;
-                
-                int modLength = textBox1.Text.Length + 1;
+                if (Directory.Exists(modPath + @"\BIO4\snd"))
+                {
 
-                GetFiles = Directory.GetFiles(modPath, "*.*", SearchOption.AllDirectories);
+                    var result = MessageBox.Show(
+                                    "The folder \"snd\" was found, this means that this mod has its own sounds. Do you wish to separate it in order to be able to use with other mods?",
+                                    "",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                                 );
 
+                    if (result == DialogResult.Yes)
+                    {
+
+                    }
+
+                }
+
+                string[] GetFiles = Directory.GetFiles(modPath, "*.*", SearchOption.AllDirectories);
                 var writer = new StreamWriter(modPath + @"\files.txt", true);
 
-                foreach (string filename in GetFiles)
+                foreach (string directory in GetFiles)
                 {
-                    if (!filename.StartsWith("files.txt"))
+                    if (!directory.Contains(@"\snd\"))
                     {
-                        writer.WriteLine("file=" + filename.Remove(0, modLength));
+                        writer.WriteLine("file=" + directory.Remove(0, modLength));
+                    }
+                    else
+                    {
+                        writer.WriteLine("snd=" + directory.Remove(0, modLength));
                     }
                 }
 
@@ -94,15 +116,7 @@ namespace ModChanger
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton2.Checked)
-            {
-                comboBox1.Enabled = false;
-                comboBox1.SelectedItem = null;
-            }
-            else
-            {
-                comboBox1.Enabled = true;
-            }
+            
         }
     }
 }
