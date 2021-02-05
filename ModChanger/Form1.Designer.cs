@@ -38,7 +38,6 @@ namespace ModChanger
             this.button2 = new System.Windows.Forms.Button();
             this.button_browseFiles = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
@@ -133,15 +132,6 @@ namespace ModChanger
             this.label2.TabIndex = 7;
             this.label2.Text = "RE4 Mod Changer by ShockWav3";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(250, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 20);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "(v1.0.0)";
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(14, 97);
@@ -235,7 +225,6 @@ namespace ModChanger
             this.Controls.Add(this.btn_Settings);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button_browseFiles);
             this.Controls.Add(this.button2);
@@ -264,7 +253,6 @@ namespace ModChanger
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button_browseFiles;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label4;
