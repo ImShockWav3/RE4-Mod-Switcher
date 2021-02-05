@@ -117,7 +117,6 @@ namespace ModChanger
                                 break;
 
                             default:
-                                richTextBox1.AppendText("\nInfo: Your anti-aliasing setting in config.ini has an invalid value. Changing it to 0\n");
                                 cb_AntiAliasing.SelectedItem = "Off";
                                 break;
                         }
@@ -149,7 +148,6 @@ namespace ModChanger
                                 break;
 
                             default:
-                                richTextBox1.AppendText("\nInfo: Your anisotropy filtering setting in config.ini has an invalid value. Changing it to 0\n");
                                 cb_Anisotropy.SelectedItem = "Off";
                                 break;
                         }
@@ -173,7 +171,6 @@ namespace ModChanger
                                 break;
 
                             default:
-                                richTextBox1.AppendText("\nInfo: Your shadow quality setting in config.ini has an invalid value. Changing it to Medium\n");
                                 cb_ShadowQuality.SelectedItem = "Medium";
                                 break;
                         }
@@ -192,7 +189,6 @@ namespace ModChanger
                                 break;
 
                             default:
-                                richTextBox1.AppendText("\nInfo: Your texture quality setting in config.ini has an invalid value. Changing it to HD\n");
                                 rb_Texture_HD.Checked = true;
                                 break;
                         }
@@ -214,7 +210,6 @@ namespace ModChanger
                         {
                             case 0:
                                 rb_FPSoff.Checked = true;
-                                richTextBox1.AppendText("\nInfo: Please notice that playing with no framecap will solve slowmotion problems. But it will also cause several bugs in your gameplay.\n");
                                 break;
 
                             case 30:
@@ -227,10 +222,6 @@ namespace ModChanger
 
                             default:
                                 rb_FPS60.Checked = true;
-
-                                AppendRichText(richTextBox1, "\nINFO: ", Color.Red);
-                                AppendRichText(richTextBox1, "Your framerate setting in config.ini has an invalid value. Changing it to 60\n", Color.Black);
-
                                 break;
                         }
                     }
@@ -245,14 +236,9 @@ namespace ModChanger
 
                             case 1:
                                 chk_EnableSubtitles.Checked = true;
-
-                                AppendRichText(richTextBox1, "\nINFO: ", Color.Red);
-                                AppendRichText(richTextBox1, "Please notice that subtitles affects all languages but english.\n", Color.Black);
-
                                 break;
 
                             default:
-                                richTextBox1.AppendText("\nInfo: Your subtitle setting in config.ini has an invalid value. Changing it to Off\n");
                                 rb_FPS60.Checked = true;
                                 break;
                         }
@@ -515,6 +501,11 @@ namespace ModChanger
                     break;
 
             }
+        }
+
+        private void rb_FPSoff_CheckedChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Removing the frame limit will fix most of the slow motion problems, but will also cause several bugs to your game. Please know that turning it off is not recommended.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
