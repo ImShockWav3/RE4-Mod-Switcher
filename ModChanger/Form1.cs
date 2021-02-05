@@ -98,23 +98,35 @@ namespace ModChanger
             pBar1.Value = 0;
             pBar1.Maximum = files.Length;
 
+            if (Directory.Exists(gamePath + "\\FILES"))
+            {
+                Directory.Move(gamePath + "\\FILES", modPath + "\\FILES");
+            }
+
             foreach (string f in files)
             {
                 string file = f.Replace("file=", "\\");
 
-                if (!File.Exists(modPath + file) && File.Exists(gamePath + file))
+                try
                 {
-                    File.Move(gamePath + file, modPath + file);
-                }
+                    if (!File.Exists(modPath + file) && File.Exists(gamePath + file))
+                    {
+                        File.Move(gamePath + file, modPath + file);
+                    }
 
-                if (File.Exists(gamePath + file + ".bak"))
-                {
-                    File.Move(gamePath + file + ".bak", gamePath + file);
-                }
+                    if (File.Exists(gamePath + file + ".bak"))
+                    {
+                        File.Move(gamePath + file + ".bak", gamePath + file);
+                    }
 
-                if (File.Exists(gamePath + file + ".lfs.bak"))
+                    if (File.Exists(gamePath + file + ".lfs.bak"))
+                    {
+                        File.Move(gamePath + file + ".lfs.bak", gamePath + file + ".lfs");
+                    }
+                }
+                catch (IOException e)
                 {
-                    File.Move(gamePath + file + ".lfs.bak", gamePath + file + ".lfs");
+                    MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 pBar1.PerformStep();
@@ -136,23 +148,35 @@ namespace ModChanger
             pBar1.Value = 0;
             pBar1.Maximum = files.Length;
 
+            if (Directory.Exists(modPath + "\\FILES"))
+            {
+                Directory.Move(modPath + "\\FILES", gamePath + "\\FILES");
+            }
+
             foreach (string f in files)
             {
                 string file = f.Replace("file=", "\\");
 
-                if (File.Exists(gamePath + file))
+                try
                 {
-                    File.Move(gamePath + file, gamePath + file + ".bak");
-                }
+                    if (File.Exists(gamePath + file))
+                    {
+                        File.Move(gamePath + file, gamePath + file + ".bak");
+                    }
 
-                if (File.Exists(gamePath + file + ".lfs"))
-                {
-                    File.Move(gamePath + file + ".lfs", gamePath + file + ".lfs.bak");
-                }
+                    if (File.Exists(gamePath + file + ".lfs"))
+                    {
+                        File.Move(gamePath + file + ".lfs", gamePath + file + ".lfs.bak");
+                    }
 
-                if (File.Exists(modPath + file) && !File.Exists(gamePath + file))
+                    if (File.Exists(modPath + file) && !File.Exists(gamePath + file))
+                    {
+                        File.Move(modPath + file, gamePath + file);
+                    }
+                }
+                catch (IOException e)
                 {
-                    File.Move(modPath + file, gamePath + file);
+                    MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
 
                 pBar1.PerformStep();

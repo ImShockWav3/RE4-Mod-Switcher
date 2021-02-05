@@ -74,7 +74,7 @@ namespace ModChanger
 
                 foreach (string directory in GetFiles)
                 {
-                    if (!directory.Contains("files.txt"))
+                    if (!directory.Contains("\\FILES\\"))
                     {
                         writer.WriteLine("file=" + directory.Remove(0, modLength));
                     }
