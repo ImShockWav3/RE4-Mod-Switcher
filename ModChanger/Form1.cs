@@ -157,6 +157,11 @@ namespace ModChanger
             {
                 string file = f.Replace("file=", "\\");
 
+                if (!Directory.Exists(gamePath + file))
+                {
+                    new FileInfo(gamePath + file).Directory.Create();
+                }
+
                 try
                 {
                     if (File.Exists(gamePath + file))
