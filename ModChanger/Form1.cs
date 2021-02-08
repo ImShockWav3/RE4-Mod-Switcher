@@ -103,6 +103,9 @@ namespace ModChanger
                 Directory.Move(gamePath + "\\FILES", modPath + "\\FILES");
             }
 
+            string[] errors = { };
+            string ePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\exceptions.txt";
+
             foreach (string f in files)
             {
                 string file = f.Replace("file=", "\\");
@@ -126,12 +129,14 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    File.AppendAllText(ePath, $"{e.Message.Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"\n");
                 }
 
                 pBar1.PerformStep();
-
             }
+
+            MessageBox.Show(File.ReadAllText(ePath));
         }
 
         private void Install()
@@ -144,6 +149,7 @@ namespace ModChanger
             string modPath = Settings[modLine].ToString().Split('|')[1];
 
             string[] files = File.ReadAllLines(modPath + "\\files.txt");
+            string[] errors = { };
 
             pBar1.Value = 0;
             pBar1.Maximum = files.Length;
@@ -181,7 +187,7 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    //MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
 
                 pBar1.PerformStep();
