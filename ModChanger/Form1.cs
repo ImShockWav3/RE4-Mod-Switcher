@@ -128,14 +128,12 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    //MessageBox.Show($"{e.Message.ToString().Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //File.AppendAllText(ePath, $"{e.Message.Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"\n");
+                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}", Color.Red);
+                    AppendRichText(rtbLog, $":\"{file.Substring(1)}\"\n", Color.Black);
                 }
 
                 pBar1.PerformStep();
             }
-
-            if (File.Exists(ePath)) { MessageBox.Show(File.ReadAllText(ePath)); File.Delete(ePath); }
         }
 
         private void Install()
@@ -186,7 +184,8 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    //File.AppendAllText(ePath, $"{e.Message.Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"\n");
+                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}", Color.Red);
+                    AppendRichText(rtbLog, $":\"{file.Substring(1)}\"\n", Color.Black);
                 }
 
                 pBar1.PerformStep();
@@ -196,9 +195,6 @@ namespace ModChanger
                     lblStatus.Text = $"{selectedMod} has been installed.";
                 }
             }
-
-            if (File.Exists(ePath)) { MessageBox.Show(File.ReadAllText(ePath)); File.Delete(ePath); }
-            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -322,6 +318,15 @@ namespace ModChanger
             return lineNumber;
         }
 
+        private void AppendRichText(RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+        }
+
         public void wait(int milliseconds)
         {
             var timer2 = new Timer();
@@ -406,6 +411,29 @@ namespace ModChanger
             comboBox1.Items.Add("Original");
             RefreshList();
             comboBox1.SelectedItem = currentMod;
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {
+            Height = 590;
+            btnShowLog.Visible = false;
+            rtbLog.Visible = true;
+            btnHideLog.Visible = true;
+            btnCleanLog.Visible = true;
+        }
+
+        private void btnHideLog_Click(object sender, EventArgs e)
+        {
+            Height = 348;
+            btnShowLog.Visible = true;
+            rtbLog.Visible = false;
+            btnHideLog.Visible = false;
+            btnCleanLog.Visible = false;
+        }
+
+        private void btnCleanLog_Click(object sender, EventArgs e)
+        {
+            rtbLog.Clear();
         }
     }
 }
