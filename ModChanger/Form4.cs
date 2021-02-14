@@ -505,7 +505,11 @@ namespace ModChanger
 
         private void rb_FPSoff_CheckedChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Removing the frame limit will fix most of the slow motion problems, but will also cause several bugs to your game. Please know that turning it off is not recommended.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (rb_FPSoff.Checked)
+            {
+                MessageBox.Show("Removing the frame limit will fix most of the slow motion problems, but will also cause several bugs to your game. Please know that turning it off is not recommended.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+             
         }
     }
 }

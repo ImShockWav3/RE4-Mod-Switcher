@@ -128,8 +128,8 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}", Color.Red);
-                    AppendRichText(rtbLog, $":\"{file.Substring(1)}\"\n", Color.Black);
+                    AppendRichText(rtbLog, "(ERROR) ", Color.Red);
+                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"\n", Color.Black);
                 }
 
                 pBar1.PerformStep();
@@ -184,8 +184,8 @@ namespace ModChanger
                 }
                 catch (IOException e)
                 {
-                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}", Color.Red);
-                    AppendRichText(rtbLog, $":\"{file.Substring(1)}\"\n", Color.Black);
+                    AppendRichText(rtbLog, "(ERROR) ", Color.Red);
+                    AppendRichText(rtbLog, $"{e.Message.Remove(e.Message.Length - 1)}: \"{file.Substring(1)}\"\n", Color.Black);
                 }
 
                 pBar1.PerformStep();
@@ -214,6 +214,7 @@ namespace ModChanger
                 if (pBar1.Value == pBar1.Maximum)
                 {
                     lblStatus.Text = "The game has been restored to default.";
+                    AppendRichText(rtbLog, "The game has been restored to default.\n", Color.Green);
                 }
 
                 Settings[2] = "curr=Original";
@@ -230,6 +231,8 @@ namespace ModChanger
                     }
 
                     Install();
+                    AppendRichText(rtbLog, $"{selectedMod} ", Color.Blue);
+                    AppendRichText(rtbLog, "has been installed!\n", Color.Black);
 
                     Settings[2] = $"curr={selectedMod}";
                     File.WriteAllLines(settings, Settings);
