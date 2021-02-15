@@ -92,7 +92,6 @@ namespace ModChanger
 
             string gamePath = Settings[1].ToString().Split('=')[1];
             string modPath = Settings[modLine].ToString().Split('|')[1];
-
             string[] files = File.ReadAllLines(modPath + "\\files.txt");
 
             pBar1.Value = 0;
@@ -102,8 +101,6 @@ namespace ModChanger
             {
                 Directory.Move(gamePath + "\\FILES", modPath + "\\FILES");
             }
-
-            string ePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\exceptions.txt";
 
             foreach (string f in files)
             {
@@ -144,9 +141,7 @@ namespace ModChanger
 
             string gamePath = Settings[1].ToString().Split('=')[1];
             string modPath = Settings[modLine].ToString().Split('|')[1];
-
             string[] files = File.ReadAllLines(modPath + "\\files.txt");
-            string ePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\exceptions.txt";
 
             pBar1.Value = 0;
             pBar1.Maximum = files.Length;
