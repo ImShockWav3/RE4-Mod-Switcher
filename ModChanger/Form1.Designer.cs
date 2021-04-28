@@ -221,6 +221,7 @@ namespace ModChanger
             this.rtbLog.TabIndex = 17;
             this.rtbLog.Text = "";
             this.rtbLog.Visible = false;
+            this.rtbLog.TextChanged += new System.EventHandler(this.rtbLog_TextChanged);
             // 
             // btnShowLog
             // 

@@ -56,7 +56,6 @@ D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\bin\Debug\netcoreapp3.1\M
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\bin\Debug\netcoreapp3.1\ModChanger.runtimeconfig.dev.json
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\bin\Debug\netcoreapp3.1\ModChanger.dll
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\bin\Debug\netcoreapp3.1\ModChanger.pdb
-D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.csprojAssemblyReference.cache
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form1.resources
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form2.resources
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form3.resources
@@ -70,3 +69,4 @@ D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\M
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.genruntimeconfig.cache
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form4.resources
 C:\Users\nices\Documents\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form4.resources
+D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.csprojAssemblyReference.cache

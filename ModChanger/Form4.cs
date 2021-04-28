@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace ModChanger
 {
     public partial class Form4 : Form
     {
-
+        string gamePath = File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\modswitcher.ini")[1].Replace("path=", "");
         string configPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\My Games\Capcom\RE4\config.ini";
 
         public Form4()
@@ -256,19 +257,19 @@ namespace ModChanger
                     if (line.StartsWith("laserR"))
                     {
                         trackBar1.Value = opt;
-                        lbl_num_red.Text = opt.ToString();
+                        numRed.Value = opt;
                     }
 
                     if (line.StartsWith("laserG"))
                     {
                         trackBar2.Value = opt;
-                        lbl_num_green.Text = opt.ToString();
+                        numGreen.Value = opt;
                     }
 
                     if (line.StartsWith("laserB"))
                     {
                         trackBar3.Value = opt;
-                        lbl_num_blue.Text = opt.ToString();
+                        numBlue.Value = opt;
                     }
 
                     UpdateColor();
@@ -277,7 +278,24 @@ namespace ModChanger
                 sr.Close();
             }
 
+            /*
+            string gameVersion = FileVersionInfo.GetVersionInfo(gamePath + @"\Bin32\bio4.exe").FileVersion;
 
+            switch (gameVersion)
+            {
+                case "1.0.0RELEASE_DEV.0":
+                    MessageBox.Show("Your game version is 1.1.0");
+                    break;
+
+                case "1.0.18384.1":
+                    MessageBox.Show("Your game version is 1.0.6");
+                    break;
+
+                default:
+                    MessageBox.Show("Executable could not be recognized. Please make sure you have the original game installed.");
+                    break;
+            }
+            */
         }
 
 
@@ -408,19 +426,19 @@ namespace ModChanger
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            lbl_num_red.Text = trackBar1.Value.ToString();
+            numRed.Value = trackBar1.Value;
             UpdateColor();
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
-            lbl_num_green.Text = trackBar2.Value.ToString();
+            numGreen.Value = trackBar2.Value;
             UpdateColor();
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
-            lbl_num_blue.Text = trackBar3.Value.ToString();
+            numBlue.Value = trackBar3.Value;
             UpdateColor();
         }
 
@@ -446,9 +464,9 @@ namespace ModChanger
                 trackBar2.Value = green;
                 trackBar3.Value = blue;
 
-                lbl_num_red.Text = red.ToString();
-                lbl_num_green.Text = green.ToString();
-                lbl_num_blue.Text = blue.ToString();
+                numRed.Value = red;
+                numGreen.Value = green;
+                numBlue.Value = blue;
 
                 UpdateColor();
             }
@@ -464,14 +482,22 @@ namespace ModChanger
                 trackBar1.Enabled = true;
                 trackBar2.Enabled = true;
                 trackBar3.Enabled = true;
+                numRed.Enabled = true;
+                numGreen.Enabled = true;
+                numBlue.Enabled = true;
                 btn_rgbpicker.Enabled = true;
+                UpdateColor();
             }
             else
             {
                 trackBar1.Enabled = false;
                 trackBar2.Enabled = false;
                 trackBar3.Enabled = false;
+                numRed.Enabled = false;
+                numGreen.Enabled = false;
+                numBlue.Enabled = false;
                 btn_rgbpicker.Enabled = false;
+                btn_rgbpicker.BackColor = Color.FromArgb(210,210,210);
             }
         }
 
@@ -510,6 +536,29 @@ namespace ModChanger
                 MessageBox.Show("Removing the frame limit will fix most of the slow motion problems, but will also cause several bugs to your game. Please know that turning it off is not recommended.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
              
+        }
+
+        private void numRed_ValueChanged(object sender, EventArgs e)
+        {
+            trackBar1.Value = int.Parse(numRed.Value.ToString());
+            UpdateColor();
+        }
+
+        private void numGreen_ValueChanged(object sender, EventArgs e)
+        {
+            trackBar2.Value = int.Parse(numGreen.Value.ToString());
+            UpdateColor();
+        }
+
+        private void numBlue_ValueChanged(object sender, EventArgs e)
+        {
+            trackBar3.Value = int.Parse(numBlue.Value.ToString());
+            UpdateColor();
+        }
+
+        private void chk_EnableLaser_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -433,5 +433,10 @@ namespace ModChanger
         {
             rtbLog.Clear();
         }
+
+        private void rtbLog_TextChanged(object sender, EventArgs e)
+        {
+            rtbLog.ScrollToCaret();
+        }
     }
 }
