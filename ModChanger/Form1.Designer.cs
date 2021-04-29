@@ -58,7 +58,7 @@ namespace ModChanger
             // 
             this.button1.Location = new System.Drawing.Point(329, 166);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 23);
+            this.button1.Size = new System.Drawing.Size(127, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
@@ -72,7 +72,7 @@ namespace ModChanger
             "Original"});
             this.comboBox1.Location = new System.Drawing.Point(136, 137);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(151, 23);
+            this.comboBox1.Size = new System.Drawing.Size(173, 23);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -91,7 +91,7 @@ namespace ModChanger
             "Impossible +"});
             this.comboBox2.Location = new System.Drawing.Point(136, 166);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(151, 23);
+            this.comboBox2.Size = new System.Drawing.Size(173, 23);
             this.comboBox2.TabIndex = 2;
             // 
             // label1
@@ -107,7 +107,7 @@ namespace ModChanger
             // 
             this.button2.Location = new System.Drawing.Point(329, 136);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(125, 23);
+            this.button2.Size = new System.Drawing.Size(127, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Manage mods";
             this.button2.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@ namespace ModChanger
             // button_browseFiles
             // 
             this.button_browseFiles.Image = ((System.Drawing.Image)(resources.GetObject("button_browseFiles.Image")));
-            this.button_browseFiles.Location = new System.Drawing.Point(427, 71);
+            this.button_browseFiles.Location = new System.Drawing.Point(427, 73);
             this.button_browseFiles.Name = "button_browseFiles";
             this.button_browseFiles.Size = new System.Drawing.Size(29, 23);
             this.button_browseFiles.TabIndex = 6;
@@ -159,7 +159,7 @@ namespace ModChanger
             this.btn_Settings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btn_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Settings.ForeColor = System.Drawing.Color.Transparent;
-            this.btn_Settings.Location = new System.Drawing.Point(434, 10);
+            this.btn_Settings.Location = new System.Drawing.Point(434, 12);
             this.btn_Settings.Name = "btn_Settings";
             this.btn_Settings.Size = new System.Drawing.Size(22, 19);
             this.btn_Settings.TabIndex = 12;
@@ -172,7 +172,7 @@ namespace ModChanger
             this.pBar1.Location = new System.Drawing.Point(12, 224);
             this.pBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pBar1.Name = "pBar1";
-            this.pBar1.Size = new System.Drawing.Size(441, 22);
+            this.pBar1.Size = new System.Drawing.Size(444, 22);
             this.pBar1.Step = 5;
             this.pBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pBar1.TabIndex = 13;
@@ -213,11 +213,13 @@ namespace ModChanger
             // 
             // rtbLog
             // 
+            this.rtbLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbLog.Location = new System.Drawing.Point(12, 309);
+            this.rtbLog.Location = new System.Drawing.Point(12, 312);
             this.rtbLog.Name = "rtbLog";
             this.rtbLog.ReadOnly = true;
-            this.rtbLog.Size = new System.Drawing.Size(442, 231);
+            this.rtbLog.Size = new System.Drawing.Size(444, 236);
             this.rtbLog.TabIndex = 17;
             this.rtbLog.Text = "";
             this.rtbLog.Visible = false;
@@ -225,7 +227,8 @@ namespace ModChanger
             // 
             // btnShowLog
             // 
-            this.btnShowLog.Location = new System.Drawing.Point(329, 271);
+            this.btnShowLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowLog.Location = new System.Drawing.Point(331, 274);
             this.btnShowLog.Name = "btnShowLog";
             this.btnShowLog.Size = new System.Drawing.Size(125, 23);
             this.btnShowLog.TabIndex = 18;
@@ -236,7 +239,9 @@ namespace ModChanger
             // 
             // btnHideLog
             // 
-            this.btnHideLog.Location = new System.Drawing.Point(329, 271);
+            this.btnHideLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHideLog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnHideLog.Location = new System.Drawing.Point(331, 274);
             this.btnHideLog.Name = "btnHideLog";
             this.btnHideLog.Size = new System.Drawing.Size(125, 23);
             this.btnHideLog.TabIndex = 19;
@@ -248,7 +253,7 @@ namespace ModChanger
             // 
             // btnCleanLog
             // 
-            this.btnCleanLog.Location = new System.Drawing.Point(234, 271);
+            this.btnCleanLog.Location = new System.Drawing.Point(236, 274);
             this.btnCleanLog.Name = "btnCleanLog";
             this.btnCleanLog.Size = new System.Drawing.Size(89, 23);
             this.btnCleanLog.TabIndex = 20;
@@ -262,7 +267,8 @@ namespace ModChanger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 309);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(468, 309);
             this.Controls.Add(this.btnCleanLog);
             this.Controls.Add(this.btnHideLog);
             this.Controls.Add(this.btnShowLog);

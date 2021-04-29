@@ -69,4 +69,3 @@ D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\M
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.genruntimeconfig.cache
 D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form4.resources
 C:\Users\nices\Documents\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.Form4.resources
-D:\João\Documentos\GitHub\RE4-Mod-Switcher\ModChanger\obj\Debug\netcoreapp3.1\ModChanger.csprojAssemblyReference.cache

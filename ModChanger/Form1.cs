@@ -413,7 +413,7 @@ namespace ModChanger
 
         private void btnShowLog_Click(object sender, EventArgs e)
         {
-            Height = 590;
+            Height = 598;
             btnShowLog.Visible = false;
             rtbLog.Visible = true;
             btnHideLog.Visible = true;
@@ -422,11 +422,11 @@ namespace ModChanger
 
         private void btnHideLog_Click(object sender, EventArgs e)
         {
-            Height = 348;
-            btnShowLog.Visible = true;
             rtbLog.Visible = false;
+            btnShowLog.Visible = true;
             btnHideLog.Visible = false;
             btnCleanLog.Visible = false;
+            Height = 348;
         }
 
         private void btnCleanLog_Click(object sender, EventArgs e)
